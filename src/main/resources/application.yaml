@@ -1,0 +1,60 @@
+server:
+  port: ${PORT:9000}
+  error:
+    include-message: always
+    include-binding-errors: always
+    include-stacktrace: on_param # to get trace use ?trace=true in url
+    include-exception: false
+spring:
+  cloud:
+    config:
+      enabled: false
+  application:
+    name: ALTRA-APPS-SCHEMA-SERVICE
+  main:
+    banner-mode: off
+  output:
+    ansi:
+      enabled: ALWAYS
+  jpa:
+    show-sql: true
+    open-in-view: false
+    hibernate:
+      #create-drop validate create
+      ddl-auto: create-drop
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        web-allow-others: true
+  datasource:
+    url: jdbc:h2:~/altra-apps-schema
+    #url: jdbc:postgresql://localhost:5432/altra-apps-schema
+    username: admin
+    password: admin
+    driver-class-name: org.h2.Driver
+    #driver-class-name: org.postgresql.Driver
+  data:
+    mongodb:
+      database: altra-apps-schema
+      port: 27017
+      host: localhost
+      authentication-database: admin
+      username: rootuser
+      password: rootpass
+      auto-index-creation: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - httptrace
+          - info
+          - env
+          - configprops
+          - metrics
+altra-apps-schema:
+  trace: true
+
