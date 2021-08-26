@@ -63,8 +63,7 @@ volumes:
   # default dir on Ubuntu: /var/lib/docker/volumes
   hasura_db_data:
   mongodb_data_container:
-  elasticsearch-data:
-    driver: local
+
 networks:
   mongo_net:
     driver: bridge
