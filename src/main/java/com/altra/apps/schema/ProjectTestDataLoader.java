@@ -64,9 +64,9 @@ public class ProjectTestDataLoader {
         final Unit unit_level3 = getUnit(topicLabel_level3.getLevels().stream().findAny().get(), topicLabel_level3.getTopics().stream().findAny().get());
         final Unit unit_level4 = getUnit(topicLabel_level4.getLevels().stream().findAny().get(), topicLabel_level4.getTopics().stream().findAny().get());
 
-        ResourceBlock block1 = getResourceBlock();
+        ResourceBlock block1 = getResourceBlock(unit_level4);
         unit_level4.addBlock(block1);
-        ResourceBlock block2 = getResourceBlock();
+        ResourceBlock block2 = getResourceBlock(unit_level4);
         unit_level4.addBlock(block2);
 
         unit_level3.addChildUnit(unit_level4);
@@ -143,7 +143,7 @@ public class ProjectTestDataLoader {
         return topic;
     }
 
-    private ResourceBlock getResourceBlock() {
+    private ResourceBlock getResourceBlock(Unit unit) {
         ResourceBlock block = new ResourceBlock();
         block.setTitle("2015 Past Paper");
         block.setDescription("The official SQA 2015 Past Paper...");
@@ -160,6 +160,8 @@ public class ProjectTestDataLoader {
         headingBlock.setPid(getUniqueId());
         headingBlock.setCreatedTime(CustomUtils.getEpochCurrentTime());
         headingBlock.setLastEditedTime(CustomUtils.getEpochCurrentTime());
+        // need to add each block to the unit separately
+        unit.addBlock(headingBlock);
         block.addChildBlock(headingBlock);
 
 
@@ -168,6 +170,8 @@ public class ProjectTestDataLoader {
         subHeadingBlock.setPid(getUniqueId());
         subHeadingBlock.setCreatedTime(CustomUtils.getEpochCurrentTime());
         subHeadingBlock.setLastEditedTime(CustomUtils.getEpochCurrentTime());
+        // need to add each block to the unit separately
+        unit.addBlock(subHeadingBlock);
         block.addChildBlock(subHeadingBlock);
         return block;
     }

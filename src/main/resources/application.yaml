@@ -21,7 +21,7 @@ spring:
     open-in-view: false
     hibernate:
       #create-drop validate create
-      ddl-auto: create-drop
+      ddl-auto: validate
   h2:
     console:
       enabled: true
@@ -29,15 +29,16 @@ spring:
       settings:
         web-allow-others: true
   datasource:
-    url: jdbc:h2:~/altra-apps-schema
-    #url: jdbc:postgresql://localhost:5432/altra-apps-schema
-    username: admin
-    password: admin
-    driver-class-name: org.h2.Driver
-    #driver-class-name: org.postgresql.Driver
+    #url: jdbc:h2:~/altra-apps-schema
+    #jdbc:postgresql://localhost:5432/plannerDB
+    url: jdbc:postgresql://localhost:65432/postgres
+    username: postgres
+    password: postgrespassword
+    #driver-class-name: org.h2.Driver
+    driver-class-name: org.postgresql.Driver
   data:
     mongodb:
-      database: altra-apps-schema
+      database: altra_apps_schema
       port: 27017
       host: localhost
       authentication-database: admin

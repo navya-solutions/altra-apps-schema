@@ -6,34 +6,36 @@ Building the API client library requires:
 
 1. OpenJDK 16+
 2. Maven 3.5+
-3. Docker (for running NOSQL DB only)
+3. Docker
 
 ## Installation
 
-To install the API client library to your local Maven repository, simply execute:
+To install the application to your local Maven repository, simply execute:
 
 ```shell
 mvn clean install
 ```
 
 ## Getting Started
-
-### Run project locally with SQL DB (H2)
-
-1. run `mvn spring-boot:run` from console to start the application Or use IDE and run
-   the `AltraAppsSchemaApplication.java`
+1. Go to docker-compose folder and run `docker-compose up` to start docker containers for:
+   1. postgres DB
+   2. Hasura (graphql-engine) 
+   3. Mongo DB 
+   4. Mongo express docker instances
+2. For MongoDB configuration, use `http://localhost:8081/` to create altra_apps_schema database for application
+3. For Hasura configuration, use `http://localhost:8080/console/` to 
+   1. Connect to the postgres DB
+   2. Create new database 
+   3. Visit each table and verify relationship configuration
+      ![tables-relationship-configuration](setup/images/hasura-db-tables-relationship-config.PNG)
 
 When the application runs successfully
 
-1. Test data (defined in `ProjectTestDataLoader.java`) is created in H2 database
+1. Test data (defined in `ProjectTestDataLoader.java`) is created in postgresDB 
 2. Data model Json file is generated in console logs
-3. h2-console is available to access the database at http://localhost:9000/h2-console
-   ![How to login to H2-console](setup/images/h2-embedded-config-settings.PNG)
 
-### Run project locally with NoSQL DB (MongoDB)
+#### PostgresDB configuration
+![Access postgresDB from local server](setup/images/postgres-access-config-settings.PNG)
 
-1. Go to /docker-compose and run `docker-compose up` to start Mongo DB and Mongo express docker instances
-2. Go to `http://localhost:8081/` and create altra-apps-schema DB
-3. Follow all steps defined under `Steps to run the project locally with SQL DB (H2)`
 
 NOTE! NoSQL setup is not working as per new schema changes.
