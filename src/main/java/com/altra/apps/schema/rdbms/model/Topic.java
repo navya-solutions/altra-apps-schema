@@ -9,12 +9,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-
 @Table(name = "TOPIC")
-/**
- * A topic is a collection of concepts that are taught
- * Examples: MATHS, HISTORY etc
- */
 public class Topic {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

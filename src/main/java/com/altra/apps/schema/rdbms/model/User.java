@@ -13,9 +13,6 @@ import java.util.Set;
 @EqualsAndHashCode
 @Entity
 @Table(name = "USERS")
-/**
- * A unit is a topic with a level and its own subtopics
- */
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

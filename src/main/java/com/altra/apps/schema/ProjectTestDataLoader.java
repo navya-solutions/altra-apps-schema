@@ -1,12 +1,18 @@
 package com.altra.apps.schema;
 
-import com.altra.apps.schema.common.*;
+import com.altra.apps.schema.common.ChangeRequestObjectType;
+import com.altra.apps.schema.common.ChangeRequestStatusType;
+import com.altra.apps.schema.common.ChangeRequestType;
+import com.altra.apps.schema.common.CustomUtils;
 import com.altra.apps.schema.rdbms.model.*;
+import com.altra.apps.schema.service.BlockTypeEnum;
 import com.altra.apps.schema.service.CurriculumService;
+import com.altra.apps.schema.type.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.Comparator;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -30,6 +36,7 @@ public class ProjectTestDataLoader {
         curriculum.setTitle("Curriculum for Excellence");
         curriculum.setShortTitle("CFE");
 
+        // create curriculum change request
         final CurriculumChangeRequest changeRequest = getCurriculumChangeRequest();
         curriculum.addCurriculumSuggestions(changeRequest);
 
@@ -59,30 +66,101 @@ public class ProjectTestDataLoader {
                 .max(Comparator.comparing(TopicLabel::getSequence))
                 .get();
 
-        final Unit unit_level1 = getUnit(topicLabel_level1.getLevels().stream().findAny().get(), topicLabel_level1.getTopics().stream().findAny().get());
+        // create units
+        final Level subjectLevel1 = topicLabel_level1.getLevels().stream().findAny().get();
+        final Topic subjectTopicMaths = topicLabel_level1.getTopics().stream().findAny().get();
+        final Unit unit_level1 = getUnit(subjectLevel1, subjectTopicMaths);
         final Unit unit_level2 = getUnit(topicLabel_level2.getLevels().stream().findAny().get(), topicLabel_level2.getTopics().stream().findAny().get());
         final Unit unit_level3 = getUnit(topicLabel_level3.getLevels().stream().findAny().get(), topicLabel_level3.getTopics().stream().findAny().get());
         final Unit unit_level4 = getUnit(topicLabel_level4.getLevels().stream().findAny().get(), topicLabel_level4.getTopics().stream().findAny().get());
+        final Unit unit_level5 = getUnit(subjectLevel1, subjectTopicMaths);
 
-        ResourceBlock block1 = getResourceBlock(unit_level4);
-        unit_level4.addBlock(block1);
-        ResourceBlock block2 = getResourceBlock(unit_level4);
-        unit_level4.addBlock(block2);
 
+        // create block container to store different block types
+        Block block = getBlock();
+        block.setBlockType(BlockTypeEnum.page);
+        // add page block
+        final PageBlockType pageBlockType = getPageBlockType();
+        block.setBlock(pageBlockType);
+        // set unit block association
+        unit_level4.addBlock(block);
+
+        // create unit tree structure
         unit_level3.addChildUnit(unit_level4);
         unit_level2.addChildUnit(unit_level3);
         unit_level1.addChildUnit(unit_level2);
 
+        // add units to curriculum
         curriculum.addUnit(unit_level1);
         curriculum.addUnit(unit_level2);
         curriculum.addUnit(unit_level3);
         curriculum.addUnit(unit_level4);
+        curriculum.addUnit(unit_level5);
 
-
+        // save curriculum
         final Curriculum curriculum1 = curriculumService.addCurriculum(curriculum);
+        // print saved curriculum in console
         CustomUtils.ObjectToJson(curriculum1);
 
     }
+
+    private PageBlockType getPageBlockType() {
+        final PageBlockType pageBlockType = new PageBlockType();
+        pageBlockType.setHasChildren(true);
+        pageBlockType.setId(getUniqueId());
+        pageBlockType.setText(List.of(getTextType("link", "content")));
+        pageBlockType.setChildren(List.of(getHeadingOneBlockType(), getTodoBlockType()));
+        return pageBlockType;
+    }
+
+    private HeadingOneBlockType getHeadingOneBlockType() {
+        HeadingOneBlockType headingOneBlockType = new HeadingOneBlockType();
+        headingOneBlockType.setHasChildren(false);
+        headingOneBlockType.setId(getUniqueId());
+        headingOneBlockType.setText(List.of(getTextType("link", "content")));
+        return headingOneBlockType;
+    }
+
+    private TextType getTextType(String link, String header) {
+        TextType textType = new TextType();
+        textType.setLink(link);
+        textType.setContent(header);
+        return textType;
+    }
+
+    private TodoBlockType getTodoBlockType() {
+        TodoBlockType todoBlockType = new TodoBlockType();
+        todoBlockType.setHasChildren(true);
+        todoBlockType.setId(getUniqueId());
+        RichTextType textType = getRichTextType();
+        todoBlockType.setText(List.of(textType));
+        todoBlockType.setChildren(List.of(getHeadingOneBlockType()));
+        return todoBlockType;
+    }
+
+    private RichTextType getRichTextType() {
+        RichTextType textType = new RichTextType();
+        textType.setPlainText("plain-text");
+        AnnotationType annotationType = new AnnotationType();
+        annotationType.setBold(true);
+        textType.setAnnotations(Set.of(annotationType));
+        textType.setHref("href");
+        return textType;
+    }
+
+    private Block getBlock() {
+        Block block = new Block();
+        //block.setBlockOrderOnPage(1);
+        block.setArchived(false);
+        block.setCreatedTime(CustomUtils.getEpochCurrentTime());
+        block.setLastEditedTime(CustomUtils.getEpochCurrentTime());
+        block.setPid(getUniqueId());
+        final Language language = new Language();
+        language.setTitle("ENGLISH");
+        block.addLanguage(language);
+        return block;
+    }
+
 
     private CurriculumChangeRequest getCurriculumChangeRequest() {
         final CurriculumChangeRequest changeRequest = new CurriculumChangeRequest();
@@ -143,38 +221,6 @@ public class ProjectTestDataLoader {
         return topic;
     }
 
-    private ResourceBlock getResourceBlock(Unit unit) {
-        ResourceBlock block = new ResourceBlock();
-        block.setTitle("2015 Past Paper");
-        block.setDescription("The official SQA 2015 Past Paper...");
-        block.setExportFormat(ExportFormatType.PDF);
-        block.setCreatedTime(CustomUtils.getEpochCurrentTime());
-        block.setLastEditedTime(CustomUtils.getEpochCurrentTime());
-        block.setPid(getUniqueId());
-        final Language language = new Language();
-        language.setTitle("ENGLISH");
-        block.addLanguage(language);
-
-        HeadingBlock headingBlock = new HeadingBlock();
-        headingBlock.setTitle("1 Hour and 15 minutes");
-        headingBlock.setPid(getUniqueId());
-        headingBlock.setCreatedTime(CustomUtils.getEpochCurrentTime());
-        headingBlock.setLastEditedTime(CustomUtils.getEpochCurrentTime());
-        // need to add each block to the unit separately
-        unit.addBlock(headingBlock);
-        block.addChildBlock(headingBlock);
-
-
-        SubHeadingBlock subHeadingBlock = new SubHeadingBlock();
-        subHeadingBlock.setTitle("1 Hour and 15 minutes");
-        subHeadingBlock.setPid(getUniqueId());
-        subHeadingBlock.setCreatedTime(CustomUtils.getEpochCurrentTime());
-        subHeadingBlock.setLastEditedTime(CustomUtils.getEpochCurrentTime());
-        // need to add each block to the unit separately
-        unit.addBlock(subHeadingBlock);
-        block.addChildBlock(subHeadingBlock);
-        return block;
-    }
 
     private Country getCountry() {
         final Country country = new Country();

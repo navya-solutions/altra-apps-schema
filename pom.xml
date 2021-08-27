@@ -15,6 +15,7 @@
     <description>Altra Apps Schem</description>
     <properties>
         <java.version>16</java.version>
+        <hibernate-types.version>2.12.1</hibernate-types.version>
     </properties>
     <dependencies>
         <dependency>
@@ -38,7 +39,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>com.vladmihalcea</groupId>
+            <artifactId>hibernate-types-55</artifactId>
+            <version>${hibernate-types.version}</version>
+        </dependency>
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
