@@ -12,9 +12,6 @@ import javax.persistence.*;
 @EqualsAndHashCode
 @Entity
 @Table(name = "INSTITUTION")
-/**
- * A unit is a topic with a level and its own subtopics
- */
 public class Institution {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -10,10 +10,7 @@ import javax.persistence.*;
 @Setter
 @Entity
 @Table(name = "LEVEL")
-/**
- * A level is a way of differentiating a topic's difficulty
- * Examples: MATHS, HISTORY etc
- */
+
 public class Level {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

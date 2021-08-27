@@ -30,7 +30,8 @@ spring:
         web-allow-others: true
   datasource:
     #url: jdbc:h2:~/altra-apps-schema
-    #jdbc:postgresql://localhost:5432/plannerDB
+    #username: ${JDBC_DATABASE_USERNAME:admin}
+    #password: ${JDBC_DATABASE_PASSWORD:admin}
     url: ${JDBC_DATABASE_URL:jdbc:postgresql://localhost:65432/postgres}
     username: ${JDBC_DATABASE_USERNAME:postgres}
     password: ${JDBC_DATABASE_PASSWORD:postgrespassword}

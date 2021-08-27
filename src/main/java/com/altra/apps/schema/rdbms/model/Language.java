@@ -20,7 +20,7 @@ public class Language {
     private String shortCode, title;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "resourceBlock_id")
+    @JoinColumn(name = "block_id")
     @JsonIgnore
-    private ResourceBlock resourceBlock;
+    private Block block;
 }

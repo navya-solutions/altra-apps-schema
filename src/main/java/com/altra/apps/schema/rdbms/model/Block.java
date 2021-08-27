@@ -1,10 +1,17 @@
 package com.altra.apps.schema.rdbms.model;
 
+import com.altra.apps.schema.service.BlockTypeEnum;
+import com.altra.apps.schema.type.BlockType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.vladmihalcea.hibernate.type.json.JsonType;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+import org.hibernate.annotations.TypeDefs;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -14,8 +21,10 @@ import java.util.Set;
 //@EqualsAndHashCode
 @Entity
 @Table(name = "BLOCK")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class Block {
+@TypeDefs({
+        @TypeDef(name = "json", typeClass = JsonType.class)
+})
+public class Block implements Serializable {
     @Id
     @GeneratedValue
     private Long id;
@@ -23,30 +32,26 @@ public class Block {
     private String pid;
     private boolean publiclyAccessible;
     private boolean archived;
-    //might be used for linking different blocks
     private String url;
-
-    //TODO: will added later
-    //private User author;
-    //TODO: "edit history" do we need it as the block will be copied for new user
-    //private User author;
-    @OneToMany(mappedBy = "parentBlock", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private Set<Block> childBlocks = new HashSet<>();
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
-    private Block parentBlock;
-    // Unix epoch format
-    private Long createdTime, lastEditedTime;
+    @Enumerated(EnumType.STRING)
+    private BlockTypeEnum blockType;// block type
+    @Type(type = "json")
+    @Column(columnDefinition = "json")
+    private BlockType block;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "unit_id")
     @JsonIgnore
     private Unit unit;
 
-    public void addChildBlock(Block block) {
-        block.setParentBlock(this);
-        this.childBlocks.add(block);
+    @OneToMany(mappedBy = "block", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private Set<Language> languages = new HashSet<>();
+    // Unix epoch format
+    private Long createdTime, lastEditedTime;
 
+    public void addLanguage(Language language) {
+        this.languages.add(language);
+        language.setBlock(this);
     }
 
     @Override

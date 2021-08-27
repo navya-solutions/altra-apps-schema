@@ -5,8 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.LinkedList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -25,13 +25,13 @@ public class Unit {
 
     @OneToMany(mappedBy = "parentUnit", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonIgnore
-    private Set<Unit> childUnits = new HashSet<>();
+    private List<Unit> childUnits = new LinkedList<>();
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     private Unit parentUnit;
 
     @OneToMany(mappedBy = "unit", cascade = CascadeType.ALL, orphanRemoval = false, fetch = FetchType.LAZY)
-    private Set<Block> blocks = new HashSet<>();
+    private List<Block> blocks = new LinkedList<>();
 
     @OneToOne(mappedBy = "unit", cascade = CascadeType.ALL, orphanRemoval = false, fetch = FetchType.LAZY)
     @JsonIgnore
