@@ -59,10 +59,10 @@ In this model, curriculum is defined for the fixed set of topicLabels.
 TopicLabels are the logical separation for different topics and levels.
 Units are defined as combination of topic and level.
 We can have nested units which can be connected with nested blocks.
-![Curriculum data modeling](setup/images/backend-Curriculum data model 1.png)
+![Curriculum data modeling](setup/images/curriculum-data-modeling-option1.png)
 
 ### Curriculum data modeling with nested topics only
 In this model, curriculum is defined with nested topics.
 Each topic has title and label, title defines the topic name while label defines the logical separation for different topics.
 We can have nested topics and those topics can be connected with nested blocks.
-![Curriculum data modeling](setup/images/backend-Curriculum data model 2.png)
+![Curriculum data modeling](setup/images/curriculum-data-modeling-option2.png)
