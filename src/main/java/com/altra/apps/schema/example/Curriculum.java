@@ -1,5 +1,7 @@
 package com.altra.apps.schema.example;
 
+import com.altra.apps.schema.common.CustomUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -77,6 +79,7 @@ public class Curriculum {
 
 
         System.out.println(rootUnit);
+        CustomUtils.ObjectToJson(rootUnit);
 
     }
 
@@ -108,6 +111,7 @@ class Unit {
     @ToString.Exclude
     private Level level;
     @ToString.Exclude
+    @JsonIgnore
     private Unit parentUnit;
 
     public void addChildUnit(Unit unit) {

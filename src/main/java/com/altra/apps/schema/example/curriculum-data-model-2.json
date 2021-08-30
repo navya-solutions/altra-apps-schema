@@ -1,0 +1,73 @@
+{
+  "topics": [
+    {
+      "title": "Maths",
+      "label": "Subject",
+      "hasChildren": true,
+      "children": [
+        {
+          "title": "NATIONAL_5",
+          "label": "Section",
+          "hasChildren": true,
+          "children": [
+            {
+              "title": "Statistics",
+              "label": "Section",
+              "hasChildren": true,
+              "children": [
+                {
+                  "title": "Circles",
+                  "label": "Section",
+                  "hasChildren": false,
+                  "children": []
+                },
+                {
+                  "title": "Pythagoras",
+                  "label": "Section",
+                  "hasChildren": false,
+                  "children": []
+                }
+              ]
+            },
+            {
+              "title": "Geometry",
+              "label": "Section",
+              "hasChildren": false,
+              "children": []
+            },
+            {
+              "title": "Algebra",
+              "label": "Section",
+              "hasChildren": false,
+              "children": []
+            }
+          ]
+        },
+        {
+          "title": "HIGHER",
+          "label": "Section",
+          "hasChildren": true,
+          "children": []
+        },
+        {
+          "title": "Avd. HIGHER",
+          "label": "Section",
+          "hasChildren": true,
+          "children": []
+        }
+      ]
+    },
+    {
+      "title": "History",
+      "label": "Subject",
+      "hasChildren": false,
+      "children": []
+    },
+    {
+      "title": "Science",
+      "label": "Subject",
+      "hasChildren": false,
+      "children": []
+    }
+  ]
+}

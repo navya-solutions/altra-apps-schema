@@ -23,7 +23,10 @@ public class Curriculum implements Serializable {
 
     @Column(nullable = false, unique = true)
     private String pid;
+    //anyone can see this curriculum.
+    private boolean hasPublicAccess;
     private String title, shortTitle, description;
+
 
     @OneToMany(mappedBy = "curriculum", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<CurriculumChangeRequest> curriculumSuggestions = new HashSet<>();

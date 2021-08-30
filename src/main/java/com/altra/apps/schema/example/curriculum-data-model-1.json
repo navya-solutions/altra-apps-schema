@@ -1,0 +1,62 @@
+{
+  "title": "MATHS-NATIONAL_5",
+  "childUnits": [
+    {
+      "title": "Geometry-Easy",
+      "childUnits": [],
+      "topic": {
+        "title": "Geometry",
+        "topicLabel": "Section"
+      },
+      "level": {
+        "title": "Easy",
+        "topicLabel": "Section"
+      }
+    },
+    {
+      "title": "Algebra-Medium",
+      "childUnits": [
+        {
+          "title": "Pythagoras-Easy",
+          "childUnits": [],
+          "topic": {
+            "title": "Pythagoras",
+            "topicLabel": "Section"
+          },
+          "level": {
+            "title": "Easy",
+            "topicLabel": "Section"
+          }
+        },
+        {
+          "title": "Circles-Easy",
+          "childUnits": [],
+          "topic": {
+            "title": "Circles",
+            "topicLabel": "Section"
+          },
+          "level": {
+            "title": "Easy",
+            "topicLabel": "Section"
+          }
+        }
+      ],
+      "topic": {
+        "title": "Algebra",
+        "topicLabel": "Section"
+      },
+      "level": {
+        "title": "Medium",
+        "topicLabel": "Section"
+      }
+    }
+  ],
+  "topic": {
+    "title": "MATHS",
+    "topicLabel": "Subject"
+  },
+  "level": {
+    "title": "NATIONAL_5",
+    "topicLabel": "Subject"
+  }
+}

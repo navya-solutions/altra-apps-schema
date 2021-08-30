@@ -25,9 +25,11 @@ public class ProjectTestDataLoader {
     public void loadTestData() {
 
         final Set<Curriculum> curriculumCounter = curriculumService.getAll();
-        if (curriculumCounter != null && curriculumCounter.size() > 1)
+        if (curriculumCounter != null && curriculumCounter.size() > 1) {
             // return if the records are in DB already!!
             return;
+        }
+
         // create curriculum
         Curriculum curriculum = new Curriculum();
         curriculum.setPid(getUniqueId());

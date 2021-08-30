@@ -13,7 +13,11 @@ import javax.persistence.*;
 @Table(name = "ROLE")
 /**
  * Possible values are:
- * DEPARTMENT_HEAD,PRIVATE_TUTOR,SENIOR_MANAGEMENT,STUDENT,TEACHER
+ * subject advisors( or Content creators),
+ * DEPARTMENT_HEAD,
+ * PRIVATE_TUTOR,
+ * SENIOR_MANAGEMENT,
+ * STUDENT,TEACHER
  */
 public class Role {
     @Id
