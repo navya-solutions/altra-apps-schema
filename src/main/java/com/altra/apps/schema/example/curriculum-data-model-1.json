@@ -1,73 +1,62 @@
 {
-  "topics": [
+  "title": "MATHS-NATIONAL_5",
+  "childUnits": [
     {
-      "title": "Maths",
-      "label": "Subject",
-      "hasChildren": true,
-      "children": [
+      "title": "Geometry-Easy",
+      "childUnits": [],
+      "topic": {
+        "title": "Geometry",
+        "topicLabel": "Section"
+      },
+      "level": {
+        "title": "Easy",
+        "topicLabel": "Section"
+      }
+    },
+    {
+      "title": "Algebra-Medium",
+      "childUnits": [
         {
-          "title": "NATIONAL_5",
-          "label": "Section",
-          "hasChildren": true,
-          "children": [
-            {
-              "title": "Statistics",
-              "label": "Section",
-              "hasChildren": true,
-              "children": [
-                {
-                  "title": "Circles",
-                  "label": "Section",
-                  "hasChildren": false,
-                  "children": []
-                },
-                {
-                  "title": "Pythagoras",
-                  "label": "Section",
-                  "hasChildren": false,
-                  "children": []
-                }
-              ]
-            },
-            {
-              "title": "Geometry",
-              "label": "Section",
-              "hasChildren": false,
-              "children": []
-            },
-            {
-              "title": "Algebra",
-              "label": "Section",
-              "hasChildren": false,
-              "children": []
-            }
-          ]
+          "title": "Pythagoras-Easy",
+          "childUnits": [],
+          "topic": {
+            "title": "Pythagoras",
+            "topicLabel": "Section"
+          },
+          "level": {
+            "title": "Easy",
+            "topicLabel": "Section"
+          }
         },
         {
-          "title": "HIGHER",
-          "label": "Section",
-          "hasChildren": true,
-          "children": []
-        },
-        {
-          "title": "Avd. HIGHER",
-          "label": "Section",
-          "hasChildren": true,
-          "children": []
+          "title": "Circles-Easy",
+          "childUnits": [],
+          "topic": {
+            "title": "Circles",
+            "topicLabel": "Section"
+          },
+          "level": {
+            "title": "Easy",
+            "topicLabel": "Section"
+          }
         }
-      ]
-    },
-    {
-      "title": "History",
-      "label": "Subject",
-      "hasChildren": false,
-      "children": []
-    },
-    {
-      "title": "Science",
-      "label": "Subject",
-      "hasChildren": false,
-      "children": []
+      ],
+      "topic": {
+        "title": "Algebra",
+        "topicLabel": "Section"
+      },
+      "level": {
+        "title": "Medium",
+        "topicLabel": "Section"
+      }
     }
-  ]
+  ],
+  "topic": {
+    "title": "MATHS",
+    "topicLabel": "Subject"
+  },
+  "level": {
+    "title": "NATIONAL_5",
+    "topicLabel": "Subject"
+  }
 }
