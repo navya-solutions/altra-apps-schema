@@ -60,9 +60,149 @@ TopicLabels are the logical separation for different topics and levels.
 Units are defined as combination of topic and level.
 We can have nested units which can be connected with nested blocks.
 ![Curriculum data modeling](setup/images/curriculum-data-modeling-option1.png)
-
+#### json example
+```json
+{
+  "title": "MATHS-NATIONAL_5",
+  "childUnits": [
+    {
+      "title": "Geometry-Easy",
+      "childUnits": [],
+      "topic": {
+        "title": "Geometry",
+        "topicLabel": "Section"
+      },
+      "level": {
+        "title": "Easy",
+        "topicLabel": "Section"
+      }
+    },
+    {
+      "title": "Algebra-Medium",
+      "childUnits": [
+        {
+          "title": "Pythagoras-Easy",
+          "childUnits": [],
+          "topic": {
+            "title": "Pythagoras",
+            "topicLabel": "Section"
+          },
+          "level": {
+            "title": "Easy",
+            "topicLabel": "Section"
+          }
+        },
+        {
+          "title": "Circles-Easy",
+          "childUnits": [],
+          "topic": {
+            "title": "Circles",
+            "topicLabel": "Section"
+          },
+          "level": {
+            "title": "Easy",
+            "topicLabel": "Section"
+          }
+        }
+      ],
+      "topic": {
+        "title": "Algebra",
+        "topicLabel": "Section"
+      },
+      "level": {
+        "title": "Medium",
+        "topicLabel": "Section"
+      }
+    }
+  ],
+  "topic": {
+    "title": "MATHS",
+    "topicLabel": "Subject"
+  },
+  "level": {
+    "title": "NATIONAL_5",
+    "topicLabel": "Subject"
+  }
+}
+```
 ### Curriculum data modeling with nested topics only
 In this model, curriculum is defined with nested topics.
 Each topic has title and label, title defines the topic name while label defines the logical separation for different topics.
 We can have nested topics and those topics can be connected with nested blocks.
 ![Curriculum data modeling](setup/images/curriculum-data-modeling-option2.png)
+#### json example
+```json
+{
+  "topics": [
+    {
+      "title": "Maths",
+      "label": "Subject",
+      "hasChildren": true,
+      "children": [
+        {
+          "title": "NATIONAL_5",
+          "label": "Section",
+          "hasChildren": true,
+          "children": [
+            {
+              "title": "Statistics",
+              "label": "Section",
+              "hasChildren": true,
+              "children": [
+                {
+                  "title": "Circles",
+                  "label": "Section",
+                  "hasChildren": false,
+                  "children": []
+                },
+                {
+                  "title": "Pythagoras",
+                  "label": "Section",
+                  "hasChildren": false,
+                  "children": []
+                }
+              ]
+            },
+            {
+              "title": "Geometry",
+              "label": "Section",
+              "hasChildren": false,
+              "children": []
+            },
+            {
+              "title": "Algebra",
+              "label": "Section",
+              "hasChildren": false,
+              "children": []
+            }
+          ]
+        },
+        {
+          "title": "HIGHER",
+          "label": "Section",
+          "hasChildren": true,
+          "children": []
+        },
+        {
+          "title": "Avd. HIGHER",
+          "label": "Section",
+          "hasChildren": true,
+          "children": []
+        }
+      ]
+    },
+    {
+      "title": "History",
+      "label": "Subject",
+      "hasChildren": false,
+      "children": []
+    },
+    {
+      "title": "Science",
+      "label": "Subject",
+      "hasChildren": false,
+      "children": []
+    }
+  ]
+}
+```
