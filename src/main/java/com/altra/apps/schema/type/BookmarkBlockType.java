@@ -1,10 +1,10 @@
 package com.altra.apps.schema.type;
 
-import com.altra.apps.schema.service.BlockTypeEnum;
+import com.altra.apps.schema.common.BlockTypeEnum;
 import lombok.Data;
 
 @Data
-public class BoolmarkBlockType extends BlockType {
+public class BookmarkBlockType extends BlockType {
     //Link to website the embed block will display.
     private FileObjectType text;
 

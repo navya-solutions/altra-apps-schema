@@ -1,7 +1,7 @@
-package com.altra.apps.schema.service;
+package com.altra.apps.schema.rdbms.service;
 
 import com.altra.apps.schema.rdbms.model.Curriculum;
-import com.altra.apps.schema.repository.CurriculumRepository;
+import com.altra.apps.schema.rdbms.repository.CurriculumRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -1,29 +1,30 @@
-package com.altra.apps.schema;
+package com.altra.apps.schema.test.data;
 
-import com.altra.apps.schema.common.ChangeRequestObjectType;
-import com.altra.apps.schema.common.ChangeRequestStatusType;
-import com.altra.apps.schema.common.ChangeRequestType;
-import com.altra.apps.schema.common.CustomUtils;
+import com.altra.apps.schema.common.*;
 import com.altra.apps.schema.rdbms.model.*;
-import com.altra.apps.schema.service.BlockTypeEnum;
-import com.altra.apps.schema.service.CurriculumService;
-import com.altra.apps.schema.type.*;
+import com.altra.apps.schema.rdbms.service.CurriculumService;
+import com.altra.apps.schema.type.PageBlockType;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.Comparator;
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
 @Component
 @AllArgsConstructor
-public class ProjectTestDataLoader {
+public class RdbmsTestDataLoader implements TestDataLoader {
 
     private final CurriculumService curriculumService;
 
-    public void loadTestData() {
 
+    @Override
+    public void testDataLoader() {
+        generateRDBMSTestData();
+
+    }
+
+    private void generateRDBMSTestData() {
         final Set<Curriculum> curriculumCounter = curriculumService.getAll();
         if (curriculumCounter != null && curriculumCounter.size() > 1) {
             // return if the records are in DB already!!
@@ -103,52 +104,8 @@ public class ProjectTestDataLoader {
         final Curriculum curriculum1 = curriculumService.addCurriculum(curriculum);
         // print saved curriculum in console
         CustomUtils.ObjectToJson(curriculum1);
-
     }
 
-    private PageBlockType getPageBlockType() {
-        final PageBlockType pageBlockType = new PageBlockType();
-        pageBlockType.setHasChildren(true);
-        pageBlockType.setId(getUniqueId());
-        pageBlockType.setText(List.of(getTextType("link", "content")));
-        pageBlockType.setChildren(List.of(getHeadingOneBlockType(), getTodoBlockType()));
-        return pageBlockType;
-    }
-
-    private HeadingOneBlockType getHeadingOneBlockType() {
-        HeadingOneBlockType headingOneBlockType = new HeadingOneBlockType();
-        headingOneBlockType.setHasChildren(false);
-        headingOneBlockType.setId(getUniqueId());
-        headingOneBlockType.setText(List.of(getTextType("link", "content")));
-        return headingOneBlockType;
-    }
-
-    private TextType getTextType(String link, String header) {
-        TextType textType = new TextType();
-        textType.setLink(link);
-        textType.setContent(header);
-        return textType;
-    }
-
-    private TodoBlockType getTodoBlockType() {
-        TodoBlockType todoBlockType = new TodoBlockType();
-        todoBlockType.setHasChildren(true);
-        todoBlockType.setId(getUniqueId());
-        RichTextType textType = getRichTextType();
-        todoBlockType.setText(List.of(textType));
-        todoBlockType.setChildren(List.of(getHeadingOneBlockType()));
-        return todoBlockType;
-    }
-
-    private RichTextType getRichTextType() {
-        RichTextType textType = new RichTextType();
-        textType.setPlainText("plain-text");
-        AnnotationType annotationType = new AnnotationType();
-        annotationType.setBold(true);
-        textType.setAnnotations(Set.of(annotationType));
-        textType.setHref("href");
-        return textType;
-    }
 
     private Block getBlock() {
         Block block = new Block();

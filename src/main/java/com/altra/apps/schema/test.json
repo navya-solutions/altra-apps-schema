@@ -1,0 +1,25 @@
+[
+  {
+    "_id": {
+      "$oid": "612d7e5dc1997c361cfecd82"
+    },
+    "hasPublicAccess": false,
+    "curriculumSuggestions": [],
+    "countries": [],
+    "topics": [
+      {
+        "$ref": "topic",
+        "$id": "27A1F86524B844BBAC34FD8302C8DE89"
+      },
+      {
+        "$ref": "topic",
+        "$id": "3DE1692B84FC44FA8A35FEBB1F7FFA39"
+      },
+      {
+        "$ref": "topic",
+        "$id": "11485CB1E9804D3BAF64755B9A92D751"
+      }
+    ],
+    "_class": "com.altra.apps.schema.mongodb.model.Curriculum"
+  }
+]

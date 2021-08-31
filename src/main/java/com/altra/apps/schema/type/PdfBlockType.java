@@ -1,6 +1,6 @@
 package com.altra.apps.schema.type;
 
-import com.altra.apps.schema.service.BlockTypeEnum;
+import com.altra.apps.schema.common.BlockTypeEnum;
 import lombok.Data;
 
 @Data

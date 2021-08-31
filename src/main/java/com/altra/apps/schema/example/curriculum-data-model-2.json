@@ -12,18 +12,18 @@
           "children": [
             {
               "title": "Statistics",
-              "label": "Section",
+              "label": "Part",
               "hasChildren": true,
               "children": [
                 {
                   "title": "Circles",
-                  "label": "Section",
+                  "label": "Key Issue Level",
                   "hasChildren": false,
                   "children": []
                 },
                 {
                   "title": "Pythagoras",
-                  "label": "Section",
+                  "label": "Key Issue Level",
                   "hasChildren": false,
                   "children": []
                 }
@@ -31,13 +31,13 @@
             },
             {
               "title": "Geometry",
-              "label": "Section",
+              "label": "Part",
               "hasChildren": false,
               "children": []
             },
             {
               "title": "Algebra",
-              "label": "Section",
+              "label": "Part",
               "hasChildren": false,
               "children": []
             }
@@ -46,13 +46,13 @@
         {
           "title": "HIGHER",
           "label": "Section",
-          "hasChildren": true,
+          "hasChildren": false,
           "children": []
         },
         {
           "title": "Avd. HIGHER",
           "label": "Section",
-          "hasChildren": true,
+          "hasChildren": false,
           "children": []
         }
       ]

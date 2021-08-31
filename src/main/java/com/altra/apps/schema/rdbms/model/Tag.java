@@ -16,6 +16,7 @@ import javax.persistence.*;
  * Possible values are:
  * DEPARTMENT_HEAD,PRIVATE_TUTOR,SENIOR_MANAGEMENT,STUDENT,TEACHER
  */
+//TODO: fields need to be corrected
 public class Tag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
