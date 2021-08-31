@@ -27,7 +27,7 @@ public class CustomUtils {
         return System.currentTimeMillis() / 1000; //Returns epoch in seconds.
     }
 
-    public static String createExternalId() {
+    public static String getUniqueId() {
         return UUID.randomUUID().toString().toUpperCase(Locale.ROOT).replace("-", "");
     }
 

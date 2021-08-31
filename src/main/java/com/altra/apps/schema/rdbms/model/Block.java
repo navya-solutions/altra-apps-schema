@@ -1,6 +1,6 @@
 package com.altra.apps.schema.rdbms.model;
 
-import com.altra.apps.schema.service.BlockTypeEnum;
+import com.altra.apps.schema.common.BlockTypeEnum;
 import com.altra.apps.schema.type.BlockType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.vladmihalcea.hibernate.type.json.JsonType;
@@ -30,7 +30,7 @@ public class Block implements Serializable {
     private Long id;
     @Column(nullable = false, unique = true)
     private String pid;
-    private boolean publiclyAccessible;
+    private boolean hasPublicAccess;
     private boolean archived;
     private String url;
     @Enumerated(EnumType.STRING)

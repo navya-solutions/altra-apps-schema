@@ -22,17 +22,17 @@ public class CurriculumDataModel2 implements Serializable {
 
         //----Topic Labels --> Section ---------------------------------------
         Topic1 sectionLevel1 = new Topic1("NATIONAL_5", "Section", true);
-        Topic1 sectionLevel2 = new Topic1("HIGHER", "Section", true);
-        Topic1 sectionLevel3 = new Topic1("Avd. HIGHER", "Section", true);
+        Topic1 sectionLevel2 = new Topic1("HIGHER", "Section", false);
+        Topic1 sectionLevel3 = new Topic1("Avd. HIGHER", "Section", false);
 
         //----Topic Labels --> Parts ---------------------------------------
-        Topic1 partLevel1 = new Topic1("Statistics", "Section", true);
-        Topic1 partLevel2 = new Topic1("Geometry", "Section", false);
-        Topic1 partLevel3 = new Topic1("Algebra", "Section", false);
+        Topic1 partLevel1 = new Topic1("Statistics", "Part", true);
+        Topic1 partLevel2 = new Topic1("Geometry", "Part", false);
+        Topic1 partLevel3 = new Topic1("Algebra", "Part", false);
 
         //----Topic Labels --> Key Issue Level ---------------------------------------
-        Topic1 KeyIssueLevel1 = new Topic1("Circles", "Section", false);
-        Topic1 KeyIssueLevel2 = new Topic1("Pythagoras", "Section", false);
+        Topic1 KeyIssueLevel1 = new Topic1("Circles", "Key Issue Level", false);
+        Topic1 KeyIssueLevel2 = new Topic1("Pythagoras", "Key Issue Level", false);
 
         //----linking between different Topic Labels  ---------------------------------------
         partLevel1.addChildTopic(KeyIssueLevel1);
@@ -64,20 +64,18 @@ public class CurriculumDataModel2 implements Serializable {
 
 @Data
 class Topic1 implements Serializable {
+    boolean hasChildren;
+    private String title;
+    private String label;
+    private List<Topic1> children = new LinkedList<>();
+    @ToString.Exclude
+    @JsonIgnore
+    private Topic1 parent;
     public Topic1(String title, String label, boolean hasChildren) {
         this.title = title;
         this.label = label;
         this.hasChildren = hasChildren;
     }
-
-    private String title;
-    private String label;
-    boolean hasChildren;
-
-    private List<Topic1> children = new LinkedList<>();
-    @ToString.Exclude
-    @JsonIgnore
-    private Topic1 parent;
 
     public void addChildTopic(Topic1 topic1) {
         this.children.add(topic1);

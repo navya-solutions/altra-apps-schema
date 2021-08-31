@@ -1,5 +1,6 @@
 package com.altra.apps.schema;
 
+import com.altra.apps.schema.test.data.ProjectTestDataLoader;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,7 +17,8 @@ public class AltraAppsSchemaApplication {
     ApplicationRunner ApplicationRunner(ProjectTestDataLoader projectTestDataLoader) {
         return args -> {
             // setup test data
-            projectTestDataLoader.loadTestData();
+            projectTestDataLoader.process();
+            ;
         };
     }
 }
