@@ -25,7 +25,7 @@ public class User {
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
     @OneToOne
-    @JoinColumn(name = "institution_id", nullable = false)
+    @JoinColumn(name = "institution_id")
     private Institution institution;
     @OneToOne
     @JoinColumn(name = "subscription_id", nullable = false)
