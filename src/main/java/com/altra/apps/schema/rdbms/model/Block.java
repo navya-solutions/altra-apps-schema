@@ -56,7 +56,11 @@ public class Block implements Serializable {
     @NotAudited
     @OneToMany(mappedBy = "block", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<BlockTag> tags = new HashSet<>();
+    @NotAudited
+    @OneToMany(mappedBy = "block", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private Set<BlockChangeRequest> curriculumSuggestions = new HashSet<>();
 
+    private Long votingPlusCount, VotingMinusCount;
     // Unix epoch format
     private Long createdTime, lastEditedTime;
 
