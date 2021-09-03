@@ -1,11 +1,9 @@
 package com.altra.apps.schema.rdbms.model;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 
@@ -13,13 +11,13 @@ import javax.persistence.*;
 @Setter
 @EqualsAndHashCode
 @Entity
-@Table(name = "LANGUAGE")
-@Audited
-public class Language {
+@Table(name = "BLOCK_TAG")
+public class BlockTag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String shortCode, title;
+    private String topicRefPid;
+    private String topicTitle;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "block_id")

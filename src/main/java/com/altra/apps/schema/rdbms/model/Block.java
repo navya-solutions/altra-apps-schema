@@ -9,6 +9,8 @@ import lombok.Setter;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -24,6 +26,10 @@ import java.util.Set;
 @TypeDefs({
         @TypeDef(name = "json", typeClass = JsonType.class)
 })
+@Audited
+//https://github.com/google/diff-match-patch for diff match patch
+//https://neil.fraser.name/writing/diff/
+
 public class Block implements Serializable {
     @Id
     @GeneratedValue
@@ -40,18 +46,28 @@ public class Block implements Serializable {
     private BlockType block;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "unit_id")
+    @JoinColumn(name = "topic_id")
     @JsonIgnore
-    private Unit unit;
+    @NotAudited
+    private Topic topic;
 
     @OneToMany(mappedBy = "block", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<Language> languages = new HashSet<>();
+    @NotAudited
+    @OneToMany(mappedBy = "block", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private Set<BlockTag> tags = new HashSet<>();
+
     // Unix epoch format
     private Long createdTime, lastEditedTime;
 
     public void addLanguage(Language language) {
         this.languages.add(language);
         language.setBlock(this);
+    }
+
+    public void addTag(BlockTag blockTag) {
+        this.tags.add(blockTag);
+        blockTag.setBlock(this);
     }
 
     @Override

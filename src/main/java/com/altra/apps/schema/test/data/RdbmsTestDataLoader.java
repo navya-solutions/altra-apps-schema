@@ -7,21 +7,31 @@ import com.altra.apps.schema.type.PageBlockType;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.Comparator;
+import java.util.Arrays;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Component
 @AllArgsConstructor
 public class RdbmsTestDataLoader implements TestDataLoader {
 
     private final CurriculumService curriculumService;
+    //private final CurriculumElasticSearchRepository curriculumElasticSearchRepository;
 
 
     @Override
     public void testDataLoader() {
         generateRDBMSTestData();
 
+    }
+
+    private TopicLabel getTopicLabel(int Sequence, String topicLabelTitle) {
+        final TopicLabel topicLabel = new TopicLabel();
+        topicLabel.setPid(getUniqueId());
+        topicLabel.setSequence(Sequence);
+        topicLabel.setTitle(topicLabelTitle);
+        return topicLabel;
     }
 
     private void generateRDBMSTestData() {
@@ -31,53 +41,81 @@ public class RdbmsTestDataLoader implements TestDataLoader {
             return;
         }
 
+
         // create curriculum
         Curriculum curriculum = new Curriculum();
         curriculum.setPid(getUniqueId());
         curriculum.addCountry(getCountry());
+        curriculum.setHasPublicAccess(true);
         curriculum.setDescription("Curriculum for Excellence places learners at the heart of education. At its centre are four fundamental capacities...");
         curriculum.setTitle("Curriculum for Excellence");
         curriculum.setShortTitle("CFE");
+        //curriculum.setCurriculumTopicLabels(CurriculumTopicLabelsEnum.SUBJECT_TOPIC_KEYISSUES_EXPLANATION);
+
+
+        // create curriculum topic labels
+        final TopicLabel topicLabel_level1 = getTopicLabel(1, "Subject");
+        curriculum.addTopicLabel(topicLabel_level1);
+        final TopicLabel topicLabel_level2 = getTopicLabel(2, "Section");
+        curriculum.addTopicLabel(topicLabel_level2);
+        final TopicLabel topicLabel_level3 = getTopicLabel(3, "Parts");
+        curriculum.addTopicLabel(topicLabel_level3);
+        final TopicLabel topicLabel_level4 = getTopicLabel(4, "Key Issues");
+        curriculum.addTopicLabel(topicLabel_level4);
+
+        final String[] topicLabels = CurriculumTopicLabelsEnum.SUBJECT_TOPIC_KEYISSUES_EXPLANATION.toString().split("_");
+        Arrays.stream(topicLabels)
+                .peek(e -> System.out.println("Topic Label value: " + e))
+                .collect(Collectors.toSet());
 
         // create curriculum change request
         final CurriculumChangeRequest changeRequest = getCurriculumChangeRequest();
         curriculum.addCurriculumSuggestions(changeRequest);
 
-        // create curriculum topic labels
-        final TopicLabel topicLabel_level1 = getTopicLabel(1, "Subject",
-                Set.of("MATHS", "HISTORY"),
-                Set.of("NATIONAL_5", "HIGHER", "Avd. HIGHER"));
-        curriculum.addTopicLabel(topicLabel_level1);
+        //----Topic Labels --> Subject ---------------------------------------
+        Topic subjectTopicMaths = getTopic("Maths", "Subject", true, curriculum, topicLabel_level1);
 
-        final TopicLabel topicLabel_level2 = getTopicLabel(2, "Section",
-                Set.of("Geometry", "Algebra", "Statistics"),
-                Set.of("Easy", "Medium", "Avd. Hard"));
-        curriculum.addTopicLabel(topicLabel_level2);
+        //----Topic Labels --> Section ---------------------------------------
+        Topic sectionLevel1 = getTopic("NATIONAL_5", "Section", true, curriculum, topicLabel_level2);
 
-        final TopicLabel topicLabel_level3 = getTopicLabel(3, "Parts",
-                Set.of("Circles", "Pythagoras"),
-                Set.of("Easy", "Medium", "Avd. Hard"));
-        curriculum.addTopicLabel(topicLabel_level3);
+        Topic sectionLevel2 = getTopic("HIGHER", "Section", true, curriculum, topicLabel_level2);
 
-        final TopicLabel topicLabel_level4 = getTopicLabel(4, "Key issue level",
-                Set.of("Straight Line", "Quartiles"),
-                Set.of("Easy", "Medium", "Avd. Hard"));
-        curriculum.addTopicLabel(topicLabel_level4);
+        Topic sectionLevel3 = getTopic("Avd. HIGHER", "Section", true, curriculum, topicLabel_level2);
 
-        final TopicLabel topicLabel = curriculum.getTopicLabels()
-                .stream()
-                .max(Comparator.comparing(TopicLabel::getSequence))
-                .get();
+        //----Topic Labels --> Parts ---------------------------------------
+        Topic partLevel1 = getTopic("Statistics", "Part", true, curriculum, topicLabel_level3);
 
-        // create units
-        final Level subjectLevel1 = topicLabel_level1.getLevels().stream().findAny().get();
-        final Topic subjectTopicMaths = topicLabel_level1.getTopics().stream().findAny().get();
-        final Unit unit_level1 = getUnit(subjectLevel1, subjectTopicMaths);
-        final Unit unit_level2 = getUnit(topicLabel_level2.getLevels().stream().findAny().get(), topicLabel_level2.getTopics().stream().findAny().get());
-        final Unit unit_level3 = getUnit(topicLabel_level3.getLevels().stream().findAny().get(), topicLabel_level3.getTopics().stream().findAny().get());
-        final Unit unit_level4 = getUnit(topicLabel_level4.getLevels().stream().findAny().get(), topicLabel_level4.getTopics().stream().findAny().get());
-        final Unit unit_level5 = getUnit(subjectLevel1, subjectTopicMaths);
+        Topic partLevel2 = getTopic("Geometry", "Part", false, curriculum, topicLabel_level3);
+        // no child topic, we can store it in DB
 
+        Topic partLevel3 = getTopic("Algebra", "Part", false, curriculum, topicLabel_level3);
+
+
+        //----Topic Labels --> Key Issue Level ---------------------------------------
+        Topic KeyIssueLevel1 = getTopic("Circles", "Part", false, curriculum, topicLabel_level3);
+
+
+        Topic KeyIssueLevel2 = getTopic("Pythagoras", "Part", false, curriculum, topicLabel_level3);
+
+        //----linking between different Topic Labels  ---------------------------------------
+        partLevel1.addChildren(KeyIssueLevel1);
+        partLevel1.addChildren(KeyIssueLevel2);
+
+        sectionLevel1.addChildren(partLevel1);
+        sectionLevel1.addChildren(partLevel2);
+        sectionLevel1.addChildren(partLevel3);
+
+        subjectTopicMaths.addChildren(sectionLevel1);
+
+        subjectTopicMaths.addChildren(sectionLevel2);
+
+        subjectTopicMaths.addChildren(sectionLevel3);
+
+        Topic subjectTopicHistory = getTopic("History", "Subject", true, curriculum, topicLabel_level1);
+        Topic sectionLevel11 = getTopic("NATIONAL_5", "Section", false, curriculum, topicLabel_level2);
+        subjectTopicHistory.addChildren(sectionLevel11);
+        Topic subjectTopicScience = getTopic("Science", "Subject", false, curriculum, topicLabel_level1);
+        curriculum.setTopics(Set.of(subjectTopicMaths, subjectTopicHistory, subjectTopicScience));
 
         // create block container to store different block types
         Block block = getBlock();
@@ -86,24 +124,30 @@ public class RdbmsTestDataLoader implements TestDataLoader {
         final PageBlockType pageBlockType = getPageBlockType();
         block.setBlock(pageBlockType);
         // set unit block association
-        unit_level4.addBlock(block);
-
-        // create unit tree structure
-        unit_level3.addChildUnit(unit_level4);
-        unit_level2.addChildUnit(unit_level3);
-        unit_level1.addChildUnit(unit_level2);
-
-        // add units to curriculum
-        curriculum.addUnit(unit_level1);
-        curriculum.addUnit(unit_level2);
-        curriculum.addUnit(unit_level3);
-        curriculum.addUnit(unit_level4);
-        curriculum.addUnit(unit_level5);
+        subjectTopicMaths.addBlock(block);
 
         // save curriculum
         final Curriculum curriculum1 = curriculumService.addCurriculum(curriculum);
+        //curriculumElasticSearchRepository.save(curriculum);
         // print saved curriculum in console
         CustomUtils.ObjectToJson(curriculum1);
+    }
+
+    private Topic getTopic(String title,
+                           String label,
+                           boolean hasChildren,
+                           Curriculum curriculum,
+                           TopicLabel topicLabel) {
+        Topic topic = new Topic();
+        topic.setPid(CustomUtils.getUniqueId());
+        topic.setTitle(title);
+        topic.setLabel(label);
+        topic.setHasChildren(hasChildren);
+        topic.setCurriculum(curriculum);
+        topic.setTopicLabel(topicLabel);
+        if (topic.getTopicLabel().getSequence() == 1)
+            topic.setTopicUnitTitle(title);
+        return topic;
     }
 
 
@@ -133,44 +177,6 @@ public class RdbmsTestDataLoader implements TestDataLoader {
         return changeRequest;
     }
 
-    private Unit getUnit(Level subjectLevel1, Topic subjectTopicMaths) {
-        Unit unit = new Unit();
-        unit.setPid(getUniqueId());
-        unit.setTopic(subjectTopicMaths);
-        unit.setLevel(subjectLevel1);
-        final String title = String.format("%s-%s", subjectTopicMaths.getTitle(), subjectLevel1.getTitle());
-        unit.setTitle(title);
-        unit.setDescription(String.format("%s description", title));
-
-        return unit;
-    }
-
-    private TopicLabel getTopicLabel(int Sequence, String topicLabelTitle, Set<String> topicTitles, Set<String> levelTitles) {
-        final TopicLabel topicLabel = new TopicLabel();
-        topicLabel.setSequence(Sequence);
-        topicLabel.setPid(getUniqueId());
-        topicLabel.setTitle(topicLabelTitle);
-
-        topicTitles.forEach(t -> {
-            Topic topic = getTopic(t);
-            topicLabel.addTopic(topic);
-        });
-
-        levelTitles.forEach(t -> {
-            Level level = getLevel(t);
-            topicLabel.addLevel(level);
-        });
-
-        return topicLabel;
-    }
-
-    private Level getLevel(String title) {
-        Level level = new Level();
-        level.setPid(getUniqueId());
-        level.setDescription(String.format("%s description", title));
-        level.setTitle(title);
-        return level;
-    }
 
     private Topic getTopic(String title) {
         Topic topic = new Topic();

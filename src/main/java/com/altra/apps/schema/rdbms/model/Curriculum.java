@@ -16,6 +16,7 @@ import java.util.Set;
  * A curriculum is a collection of topics with an owner
  *database
  */
+
 public class Curriculum implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,6 +28,14 @@ public class Curriculum implements Serializable {
     private boolean hasPublicAccess;
     private String title, shortTitle, description;
 
+    /*    @Enumerated(EnumType.STRING)
+        @Column(nullable = false)
+        private CurriculumTopicLabelsEnum curriculumTopicLabels;
+      */
+
+    @OneToMany(mappedBy = "curriculum", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private Set<TopicLabel> topicLabels = new HashSet<>();
+
 
     @OneToMany(mappedBy = "curriculum", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<CurriculumChangeRequest> curriculumSuggestions = new HashSet<>();
@@ -34,11 +43,9 @@ public class Curriculum implements Serializable {
     @OneToMany(mappedBy = "curriculum", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<Country> countries = new HashSet<>();
 
-    @OneToMany(mappedBy = "curriculum", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private Set<TopicLabel> topicLabels = new HashSet<>();
 
     @OneToMany(mappedBy = "curriculum", cascade = CascadeType.ALL, orphanRemoval = false, fetch = FetchType.LAZY)
-    private Set<Unit> units = new HashSet<>();
+    private Set<Topic> topics = new HashSet<>();
 
     @OneToOne(mappedBy = "curriculum", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Institution owner;
@@ -56,20 +63,20 @@ public class Curriculum implements Serializable {
         this.owner = owner;
     }
 
-    public void addCurriculumSuggestions(CurriculumChangeRequest suggestions) {
-        this.curriculumSuggestions.add(suggestions);
-        suggestions.setCurriculum(this);
-    }
-
     public void addTopicLabel(TopicLabel topicLabel) {
         this.topicLabels.add(topicLabel);
         topicLabel.setCurriculum(this);
     }
 
+    public void addCurriculumSuggestions(CurriculumChangeRequest suggestions) {
+        this.curriculumSuggestions.add(suggestions);
+        suggestions.setCurriculum(this);
+    }
 
-    public void addUnit(Unit unit) {
-        this.units.add(unit);
-        unit.setCurriculum(this);
+
+    public void addTopic(Topic topic) {
+        this.topics.add(topic);
+        topic.setCurriculum(this);
     }
 
     public void addCountry(Country country) {
