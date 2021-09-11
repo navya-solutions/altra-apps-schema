@@ -63,6 +63,8 @@ public class Block implements Serializable {
     private Long votingPlusCount, VotingMinusCount;
     // Unix epoch format
     private Long createdTime, lastEditedTime;
+    // contain the reference pid of the newly created block using copy/download block function
+    private String refBlockPid;
 
     public void addLanguage(Language language) {
         this.languages.add(language);

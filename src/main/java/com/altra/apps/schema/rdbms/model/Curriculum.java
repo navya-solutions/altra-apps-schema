@@ -49,7 +49,7 @@ public class Curriculum implements Serializable {
 
     @OneToOne(mappedBy = "curriculum", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Institution owner;
-
+    // contain the reference pid of the newly created curriculum using copy/download curriculum function
     private String refCurriculumPid;
 
     public void setOwner(Institution owner) {

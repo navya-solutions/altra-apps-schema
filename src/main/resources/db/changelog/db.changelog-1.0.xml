@@ -1,6 +1,6 @@
 <?xml version="1.1" encoding="UTF-8" standalone="no"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
-    <changeSet author="yogesh (generated)" id="1630651590731-1">
+    <changeSet author="yogesh (generated)" id="1630655553602-1">
         <createTable tableName="block_aud">
             <column name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="block_aud_pkey"/>
@@ -17,11 +17,12 @@
             <column name="has_public_access" type="BOOLEAN"/>
             <column name="last_edited_time" type="BIGINT"/>
             <column name="pid" type="VARCHAR(255)"/>
+            <column name="ref_block_pid" type="VARCHAR(255)"/>
             <column name="url" type="VARCHAR(255)"/>
             <column name="voting_plus_count" type="BIGINT"/>
         </createTable>
     </changeSet>
-    <changeSet author="yogesh (generated)" id="1630651590731-2">
+    <changeSet author="yogesh (generated)" id="1630655553602-2">
         <createTable tableName="block_change_request">
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="block_change_request_pkey"/>
@@ -38,7 +39,7 @@
             <column name="block_id" type="BIGINT"/>
         </createTable>
     </changeSet>
-    <changeSet author="yogesh (generated)" id="1630651590731-3">
+    <changeSet author="yogesh (generated)" id="1630655553602-3">
         <createTable tableName="block">
             <column name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="block_pkey"/>
@@ -57,12 +58,13 @@
             <column name="pid" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
+            <column name="ref_block_pid" type="VARCHAR(255)"/>
             <column name="url" type="VARCHAR(255)"/>
             <column name="voting_plus_count" type="BIGINT"/>
             <column name="topic_id" type="BIGINT"/>
         </createTable>
     </changeSet>
-    <changeSet author="yogesh (generated)" id="1630651590731-4">
+    <changeSet author="yogesh (generated)" id="1630655553602-4">
         <createTable tableName="block_tag">
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="block_tag_pkey"/>
@@ -72,7 +74,7 @@
             <column name="block_id" type="BIGINT"/>
         </createTable>
     </changeSet>
-    <changeSet author="yogesh (generated)" id="1630651590731-5">
+    <changeSet author="yogesh (generated)" id="1630655553602-5">
         <createTable tableName="country">
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="country_pkey"/>
@@ -85,7 +87,7 @@
             <column name="curriculum_id" type="BIGINT"/>
         </createTable>
     </changeSet>
-    <changeSet author="yogesh (generated)" id="1630651590731-6">
+    <changeSet author="yogesh (generated)" id="1630655553602-6">
         <createTable tableName="curriculum_change_request">
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="curriculum_change_request_pkey"/>
@@ -102,7 +104,7 @@
             <column name="curriculum_id" type="BIGINT"/>
         </createTable>
     </changeSet>
-    <changeSet author="yogesh (generated)" id="1630651590731-7">
+    <changeSet author="yogesh (generated)" id="1630655553602-7">
         <createTable tableName="curriculum">
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="curriculum_pkey"/>
@@ -119,7 +121,7 @@
             <column name="title" type="VARCHAR(255)"/>
         </createTable>
     </changeSet>
-    <changeSet author="yogesh (generated)" id="1630651590731-8">
+    <changeSet author="yogesh (generated)" id="1630655553602-8">
         <createTable tableName="topic_label">
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="topic_label_pkey"/>
@@ -132,7 +134,7 @@
             <column name="curriculum_id" type="BIGINT"/>
         </createTable>
     </changeSet>
-    <changeSet author="yogesh (generated)" id="1630651590731-9">
+    <changeSet author="yogesh (generated)" id="1630655553602-9">
         <createTable tableName="role">
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="role_pkey"/>
@@ -144,7 +146,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="yogesh (generated)" id="1630651590731-10">
+    <changeSet author="yogesh (generated)" id="1630655553602-10">
         <createTable tableName="users">
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="users_pkey"/>
@@ -163,7 +165,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="yogesh (generated)" id="1630651590731-11">
+    <changeSet author="yogesh (generated)" id="1630655553602-11">
         <createTable tableName="language">
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="language_pkey"/>
@@ -173,7 +175,7 @@
             <column name="block_id" type="BIGINT"/>
         </createTable>
     </changeSet>
-    <changeSet author="yogesh (generated)" id="1630651590731-12">
+    <changeSet author="yogesh (generated)" id="1630655553602-12">
         <createTable tableName="language_aud">
             <column name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="language_aud_pkey"/>
@@ -187,7 +189,7 @@
             <column name="block_id" type="BIGINT"/>
         </createTable>
     </changeSet>
-    <changeSet author="yogesh (generated)" id="1630651590731-13">
+    <changeSet author="yogesh (generated)" id="1630655553602-13">
         <createTable tableName="revinfo">
             <column name="rev" type="INTEGER">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="revinfo_pkey"/>
@@ -195,7 +197,7 @@
             <column name="revtstmp" type="BIGINT"/>
         </createTable>
     </changeSet>
-    <changeSet author="yogesh (generated)" id="1630651590731-14">
+    <changeSet author="yogesh (generated)" id="1630655553602-14">
         <createTable tableName="topic">
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="topic_pkey"/>
@@ -217,7 +219,7 @@
             <column name="topic_label_id" type="BIGINT"/>
         </createTable>
     </changeSet>
-    <changeSet author="yogesh (generated)" id="1630651590731-15">
+    <changeSet author="yogesh (generated)" id="1630655553602-15">
         <createTable tableName="institution">
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="institution_pkey"/>
@@ -231,7 +233,7 @@
             <column name="curriculum_id" type="BIGINT"/>
         </createTable>
     </changeSet>
-    <changeSet author="yogesh (generated)" id="1630651590731-16">
+    <changeSet author="yogesh (generated)" id="1630655553602-16">
         <createTable tableName="tag">
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="tag_pkey"/>
@@ -241,7 +243,7 @@
             <column name="topic_interests_id" type="BIGINT"/>
         </createTable>
     </changeSet>
-    <changeSet author="yogesh (generated)" id="1630651590731-17">
+    <changeSet author="yogesh (generated)" id="1630655553602-17">
         <createTable tableName="subscription_type">
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="subscription_type_pkey"/>
@@ -253,94 +255,94 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="yogesh (generated)" id="1630651590731-18">
+    <changeSet author="yogesh (generated)" id="1630655553602-18">
         <addUniqueConstraint columnNames="pid" constraintName="uk_ahahcdlun29jwsc1forc4mclp" tableName="block_change_request"/>
     </changeSet>
-    <changeSet author="yogesh (generated)" id="1630651590731-19">
+    <changeSet author="yogesh (generated)" id="1630655553602-19">
         <addForeignKeyConstraint baseColumnNames="block_id" baseTableName="language" constraintName="fk8ds1h4nn6wdqkic7afhgnym5" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="block" validate="true"/>
     </changeSet>
-    <changeSet author="yogesh (generated)" id="1630651590731-20">
+    <changeSet author="yogesh (generated)" id="1630655553602-20">
         <addForeignKeyConstraint baseColumnNames="block_id" baseTableName="block_change_request" constraintName="fka7lpq8r7bt3r8keu9duwasss" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="block" validate="true"/>
     </changeSet>
-    <changeSet author="yogesh (generated)" id="1630651590731-21">
+    <changeSet author="yogesh (generated)" id="1630655553602-21">
         <addForeignKeyConstraint baseColumnNames="block_id" baseTableName="block_tag" constraintName="fkhx7gaag30pnd7w5tjmwycyo5e" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="block" validate="true"/>
     </changeSet>
-    <changeSet author="yogesh (generated)" id="1630651590731-22">
+    <changeSet author="yogesh (generated)" id="1630655553602-22">
         <addUniqueConstraint columnNames="pid" constraintName="uk_t3p19pjna9toss8a7pwyu9e4h" tableName="block"/>
     </changeSet>
-    <changeSet author="yogesh (generated)" id="1630651590731-23">
+    <changeSet author="yogesh (generated)" id="1630655553602-23">
         <addUniqueConstraint columnNames="pid" constraintName="uk_t26tuc042apvhw54rpngi6la1" tableName="country"/>
     </changeSet>
-    <changeSet author="yogesh (generated)" id="1630651590731-24">
+    <changeSet author="yogesh (generated)" id="1630655553602-24">
         <addUniqueConstraint columnNames="pid" constraintName="uk_r8j9d6cbat8m06ofxybxyxw2l" tableName="curriculum_change_request"/>
     </changeSet>
-    <changeSet author="yogesh (generated)" id="1630651590731-25">
+    <changeSet author="yogesh (generated)" id="1630655553602-25">
         <addForeignKeyConstraint baseColumnNames="curriculum_id" baseTableName="topic_label" constraintName="fk3mvb8hl32uqukmeux59wjp5hu" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="curriculum" validate="true"/>
     </changeSet>
-    <changeSet author="yogesh (generated)" id="1630651590731-26">
+    <changeSet author="yogesh (generated)" id="1630655553602-26">
         <addForeignKeyConstraint baseColumnNames="curriculum_id" baseTableName="country" constraintName="fk6r0ntnbjx5546v63mem686r7v" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="curriculum" validate="true"/>
     </changeSet>
-    <changeSet author="yogesh (generated)" id="1630651590731-27">
+    <changeSet author="yogesh (generated)" id="1630655553602-27">
         <addForeignKeyConstraint baseColumnNames="curriculum_id" baseTableName="topic" constraintName="fkgymh5vic7lrfoy8lyln35a1aa" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="curriculum" validate="true"/>
     </changeSet>
-    <changeSet author="yogesh (generated)" id="1630651590731-28">
+    <changeSet author="yogesh (generated)" id="1630655553602-28">
         <addForeignKeyConstraint baseColumnNames="curriculum_id" baseTableName="curriculum_change_request" constraintName="fkouqc3ymvdwh8mheebcfmnk5i7" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="curriculum" validate="true"/>
     </changeSet>
-    <changeSet author="yogesh (generated)" id="1630651590731-29">
+    <changeSet author="yogesh (generated)" id="1630655553602-29">
         <addForeignKeyConstraint baseColumnNames="curriculum_id" baseTableName="institution" constraintName="fkrwvc5mmqe65rktt9i3ufbi394" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="curriculum" validate="true"/>
     </changeSet>
-    <changeSet author="yogesh (generated)" id="1630651590731-30">
+    <changeSet author="yogesh (generated)" id="1630655553602-30">
         <addUniqueConstraint columnNames="pid" constraintName="uk_pwh59fdsnrd75eilxqi6b08b0" tableName="curriculum"/>
     </changeSet>
-    <changeSet author="yogesh (generated)" id="1630651590731-31">
+    <changeSet author="yogesh (generated)" id="1630655553602-31">
         <addUniqueConstraint columnNames="pid" constraintName="uk_nkgbf9y0rvmt4twlmjxq6ensv" tableName="topic_label"/>
     </changeSet>
-    <changeSet author="yogesh (generated)" id="1630651590731-32">
+    <changeSet author="yogesh (generated)" id="1630655553602-32">
         <addUniqueConstraint columnNames="pid" constraintName="uk_oiui0bbed748reed959tjjlgg" tableName="role"/>
     </changeSet>
-    <changeSet author="yogesh (generated)" id="1630651590731-33">
+    <changeSet author="yogesh (generated)" id="1630655553602-33">
         <addForeignKeyConstraint baseColumnNames="role_id" baseTableName="users" constraintName="fk4qu1gr772nnf6ve5af002rwya" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="role" validate="true"/>
     </changeSet>
-    <changeSet author="yogesh (generated)" id="1630651590731-34">
+    <changeSet author="yogesh (generated)" id="1630655553602-34">
         <addUniqueConstraint columnNames="pid" constraintName="uk_83oqyr6c7xb2c5y2hncwmlin4" tableName="users"/>
     </changeSet>
-    <changeSet author="yogesh (generated)" id="1630651590731-35">
+    <changeSet author="yogesh (generated)" id="1630655553602-35">
         <addForeignKeyConstraint baseColumnNames="topic_label_id" baseTableName="topic" constraintName="fke679b6a4edyobvprraj7mjoih" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="topic_label" validate="true"/>
     </changeSet>
-    <changeSet author="yogesh (generated)" id="1630651590731-36">
+    <changeSet author="yogesh (generated)" id="1630655553602-36">
         <addUniqueConstraint columnNames="pid" constraintName="uk_7vk97fb7cc4wy2b5uwophxo4" tableName="topic"/>
     </changeSet>
-    <changeSet author="yogesh (generated)" id="1630651590731-37">
+    <changeSet author="yogesh (generated)" id="1630655553602-37">
         <addUniqueConstraint columnNames="pid" constraintName="uk_eg2lt16uu4xnesbkvvcdob65w" tableName="institution"/>
     </changeSet>
-    <changeSet author="yogesh (generated)" id="1630651590731-38">
+    <changeSet author="yogesh (generated)" id="1630655553602-38">
         <addUniqueConstraint columnNames="pid" constraintName="uk_500geiltv01faeap1js2a5edb" tableName="subscription_type"/>
     </changeSet>
-    <changeSet author="yogesh (generated)" id="1630651590731-39">
+    <changeSet author="yogesh (generated)" id="1630655553602-39">
         <addForeignKeyConstraint baseColumnNames="rev" baseTableName="block_aud" constraintName="fkndsyvqjax1wwk4gb3xjlilc6o" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="rev" referencedTableName="revinfo" validate="true"/>
     </changeSet>
-    <changeSet author="yogesh (generated)" id="1630651590731-40">
+    <changeSet author="yogesh (generated)" id="1630655553602-40">
         <addForeignKeyConstraint baseColumnNames="topic_id" baseTableName="block" constraintName="fkdxh7ihwqxcqhnkspsa91ubcc6" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="topic" validate="true"/>
     </changeSet>
-    <changeSet author="yogesh (generated)" id="1630651590731-41">
+    <changeSet author="yogesh (generated)" id="1630655553602-41">
         <addForeignKeyConstraint baseColumnNames="institution_id" baseTableName="users" constraintName="fkes3l5tviwmnu2d0gy350kdfht" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="institution" validate="true"/>
     </changeSet>
-    <changeSet author="yogesh (generated)" id="1630651590731-42">
+    <changeSet author="yogesh (generated)" id="1630655553602-42">
         <addForeignKeyConstraint baseColumnNames="subscription_id" baseTableName="users" constraintName="fklyno40pkyawttif0n60i04772" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="subscription_type" validate="true"/>
     </changeSet>
-    <changeSet author="yogesh (generated)" id="1630651590731-43">
+    <changeSet author="yogesh (generated)" id="1630655553602-43">
         <addForeignKeyConstraint baseColumnNames="rev" baseTableName="language_aud" constraintName="fkadkpre8edt1b93q10c2us67in" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="rev" referencedTableName="revinfo" validate="true"/>
     </changeSet>
-    <changeSet author="yogesh (generated)" id="1630651590731-44">
+    <changeSet author="yogesh (generated)" id="1630655553602-44">
         <addForeignKeyConstraint baseColumnNames="parent_id" baseTableName="topic" constraintName="fkipo6144dvb6o1rb1rgo88ut4d" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="topic" validate="true"/>
     </changeSet>
-    <changeSet author="yogesh (generated)" id="1630651590731-45">
+    <changeSet author="yogesh (generated)" id="1630655553602-45">
         <addForeignKeyConstraint baseColumnNames="topic_interests_id" baseTableName="tag" constraintName="fkeyprhq1kxbxqna036txwl3fyc" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="tag" validate="true"/>
     </changeSet>
-    <changeSet author="yogesh (generated)" id="1630651590731-46">
+    <changeSet author="yogesh (generated)" id="1630655553602-46">
         <addForeignKeyConstraint baseColumnNames="level_interests_id" baseTableName="tag" constraintName="fkrhdmb044knqxknwjjfgeqnxcy" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="tag" validate="true"/>
     </changeSet>
-    <changeSet author="yogesh (generated)" id="1630651590731-47">
+    <changeSet author="yogesh (generated)" id="1630655553602-47">
         <createSequence cacheSize="1" cycle="false" dataType="bigint" incrementBy="1" maxValue="9223372036854775807" minValue="1" sequenceName="hibernate_sequence" startValue="1"/>
     </changeSet>
 </databaseChangeLog>

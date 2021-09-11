@@ -1,0 +1,160 @@
+enum BlockType {
+    paragraph
+    heading_1
+    heading_2
+    heading_3
+    bulleted_list_item
+    numbered_list_item
+    to_do
+    toggle
+    embed
+    image
+    video
+    file
+    pdf
+    bookmark
+    page
+    question
+}
+
+enum Country {
+    UnitedKingdom
+    Sweden
+}
+enum Language {
+    English
+    German
+    Danish
+    French
+}
+enum ChangeRequestStatusType {
+    SUBMITTED
+    APPROVE
+    REJECT
+}
+enum ChangeRequestObjectType {
+    CURRICULUM
+    TOPIC_LABEL
+    TOPIC
+    LEVEL
+}
+enum ChangeRequestType {
+    CREATE
+    UPDATE
+    DELETE
+}
+enum Role {
+    SubjectAdvisors
+    DEPARTMENT_HEAD
+    PRIVATE_TUTOR
+    SENIOR_MANAGEMENT
+    STUDENT
+    TEACHER
+}
+
+enum SubscriptionType {
+    FREE
+    PREMIUM_1_SUBJECT
+    PREMIUM_INDIVIDUAL
+    PREMIUM_WHOLE_SCHOOL
+}
+
+type Curriculum @model(timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" }) {
+    id: ID!
+    hasPublicAccess: Boolean
+    title: String
+    shortTitle: String
+    description: String
+    refCurriculumPid: String
+    changeRequest: [CurriculumChangeRequest] @connection(name: "CurriculumChangeRequests")
+    countries: [Country]
+    topic: [Topic] @connection(name: "CurriculumTopics")
+    topicLabel: [TopicLabel] @connection(name: "CurriculumTopicLabels")
+    owner: Institution @connection(name: "CurriculumInstitution")
+}
+
+type CurriculumChangeRequest @model(timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" }) {
+    id: ID!
+    #block id reference need to be changed
+    refId: String
+    # user id how created change request
+    userRefId: String!
+    # suggested changes
+    description: String
+    changeRequestType: ChangeRequestType
+    changeRequestStatusType: ChangeRequestStatusType
+    changeRequestObjectType: ChangeRequestObjectType
+    changeDescription: String
+    curriculum: Curriculum @connection(name: "CurriculumChangeRequests")
+}
+
+type Institution @model {
+    id: ID!
+    name: String!
+    refId: String
+    description: String
+    curriculum: [Curriculum] @connection(name: "CurriculumInstitution")
+}
+type Topic @model {
+    id: ID!
+    title: String!
+    description: String
+    label: String
+    hasChildren: Boolean
+    topicUnitTitle: String!
+    sameAs: String
+    similarTo: String
+    children: [Topic] @connection(name: "TopicChildren")
+    parent: Topic @connection(name: "TopicChildren")
+    block: [Block] @connection(name: "TopicBlocks")
+    curriculum: Curriculum @connection(name: "CurriculumTopics")
+    topicLabel: TopicLabel @connection(name: "TopicTopicLabels")
+}
+
+type TopicLabel @model {
+    id: ID!
+    title: String
+    #sequence of topic labels i.e. Subject ->1, Section ->2 etc..
+    sequence: Int
+    topics: [Topic] @connection(name: "TopicTopicLabels")
+    curriculum: Curriculum @connection(name: "CurriculumTopicLabels")
+}
+
+type User @model {
+    id: ID!
+    name: String
+    displayName: String
+    role: [Role]
+    institution: Institution
+    subscriptionType: SubscriptionType
+    topicInterests: [String]
+    levelInterests: [String]
+}
+
+type Block @model(timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" }) {
+    id: ID!
+    hasPublicAccess: Boolean
+    archived: Boolean
+    url: AWSURL
+    blockType: BlockType
+    block: AWSJSON
+    topic: Topic @connection(name: "TopicBlocks")
+    languages: [Language]
+    tags: [String]
+    changeRequest: [BlockChangeRequest]
+    votingPlusCount: Int
+    VotingMinusCount: Int
+    refBlockPid: String
+}
+
+type BlockChangeRequest @model {
+    id: ID!
+    refId: String
+    userRefId: String
+    description: String
+    changeRequestType: ChangeRequestType
+    changeRequestStatusType: ChangeRequestStatusType
+    changeRequestObjectType: ChangeRequestObjectType
+    changeDescription: String
+    block: Block
+}

@@ -1,7 +1,8 @@
 package com.altra.apps.schema.rdbms.service;
 
+import com.altra.apps.schema.rdbms.model.Block;
 import com.altra.apps.schema.rdbms.model.Curriculum;
-import com.altra.apps.schema.rdbms.repository.CurriculumRepository;
+import com.altra.apps.schema.rdbms.repository.BlockRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,17 +12,15 @@ import java.util.stream.StreamSupport;
 
 @Service
 @AllArgsConstructor
-public class CurriculumService {
-    private final CurriculumRepository curriculumRepository;
+public class BlockService {
+    private final BlockRepository blockRepository;
 
-    public Set<Curriculum> getAll() {
-        return StreamSupport.stream(curriculumRepository.findAll().spliterator(), true)
+    public Set<Block> getAll() {
+        return StreamSupport.stream(blockRepository.findAll().spliterator(), true)
                 .collect(Collectors.toSet());
     }
 
-    public Curriculum addCurriculum(Curriculum curriculum) {
-
-        return curriculumRepository.save(curriculum);
+    public Block addBlock(Block block) {
     }
 
     public void getAllCurriculumWithTopicHierarchical() {
