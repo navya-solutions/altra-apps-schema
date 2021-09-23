@@ -38,15 +38,12 @@ NOTE! Currently, we are using a Java project for defining, creating, maintaining
 We will investigate and migrated to Java project solution to hasura CLI databases and its migration feature  
 Manual changes in the liquibase schema:
 
-Remove "pid" as there is no need to maintain another unique key a part from ID in Hasura
+schema manual changes needed after exporting using ___mvn liquibase:generateChangeLog___
+- Change all  "id" BIGINT --> "id" SERIAL 
+- Change "block" JSON --> "block" JSONB 
+- Remove "CREATE SEQUENCE"
 
-1. "pid" VARCHAR(255) NOT NULL,
-2. "pid" VARCHAR(255),
-3. all alter table with "pid"
-4. "id" BIGINT --> "id" SERIAL
-5. remove CREATE SEQUENCE  - hibernate_sequence
-
-6. Create migration manually
+5. Create migration manually
 
 ```shell
 hasura migrate create altra --database-name altra-db
