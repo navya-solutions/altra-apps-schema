@@ -21,10 +21,8 @@ import javax.persistence.*;
  */
 public class Role {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-    @Column(nullable = false, unique = true)
-    private String pid;
     private String name, description;
 
 

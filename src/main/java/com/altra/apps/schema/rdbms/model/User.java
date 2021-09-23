@@ -15,10 +15,8 @@ import java.util.Set;
 @Table(name = "USERS")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-    @Column(nullable = false, unique = true)
-    private String pid;
     private String name, displayName;
     // TODO: one-to-one Or one-to-many ??
     @OneToOne

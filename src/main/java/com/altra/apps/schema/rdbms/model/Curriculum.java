@@ -1,5 +1,6 @@
 package com.altra.apps.schema.rdbms.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,11 +20,8 @@ import java.util.Set;
 
 public class Curriculum implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-
-    @Column(nullable = false, unique = true)
-    private String pid;
     //anyone can see this curriculum.
     private boolean hasPublicAccess;
     private String title, shortTitle, description;
@@ -40,28 +38,22 @@ public class Curriculum implements Serializable {
     @OneToMany(mappedBy = "curriculum", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<CurriculumChangeRequest> curriculumSuggestions = new HashSet<>();
 
-    @OneToMany(mappedBy = "curriculum", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private Set<Country> countries = new HashSet<>();
-
-
     @OneToMany(mappedBy = "curriculum", cascade = CascadeType.ALL, orphanRemoval = false, fetch = FetchType.LAZY)
     private Set<Topic> topics = new HashSet<>();
 
-    @OneToOne(mappedBy = "curriculum", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private Institution owner;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(foreignKey=@ForeignKey(name="curriculum_institution"))
+    @JsonIgnore
+    private Institution institution;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(foreignKey=@ForeignKey(name="curriculum_country"))
+    @JsonIgnore
+    private Country country;
+
     // contain the reference pid of the newly created curriculum using copy/download curriculum function
     private String refCurriculumPid;
 
-    public void setOwner(Institution owner) {
-        if (owner == null) {
-            if (this.owner != null) {
-                this.owner.setCurriculum(null);
-            }
-        } else {
-            owner.setCurriculum(this);
-        }
-        this.owner = owner;
-    }
 
     public void addTopicLabel(TopicLabel topicLabel) {
         this.topicLabels.add(topicLabel);
@@ -73,16 +65,12 @@ public class Curriculum implements Serializable {
         suggestions.setCurriculum(this);
     }
 
-
     public void addTopic(Topic topic) {
         this.topics.add(topic);
         topic.setCurriculum(this);
     }
 
-    public void addCountry(Country country) {
-        this.countries.add(country);
-        country.setCurriculum(this);
-    }
+
 
     @Override
     public boolean equals(Object o) {

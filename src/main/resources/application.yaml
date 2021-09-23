@@ -21,7 +21,7 @@ spring:
     open-in-view: false
     hibernate:
       #create-drop validate create
-      ddl-auto: validate
+      ddl-auto: create-drop
   h2:
     console:
       enabled: true
@@ -32,9 +32,9 @@ spring:
     #url: jdbc:h2:~/altra-apps-schema
     #username: ${JDBC_DATABASE_USERNAME:admin}
     #password: ${JDBC_DATABASE_PASSWORD:admin}
-    url: ${JDBC_DATABASE_URL:jdbc:postgresql://localhost:65432/postgres}
-    username: ${JDBC_DATABASE_USERNAME:postgres}
-    password: ${JDBC_DATABASE_PASSWORD:postgrespassword}
+    url: ${JDBC_DATABASE_URL:jdbc:postgresql://localhost:5432/atlra_test_db}
+    username: ${JDBC_DATABASE_USERNAME:vgcs_app}
+    password: ${JDBC_DATABASE_PASSWORD:vgcs_app}
 
     #driver-class-name: org.h2.Driver
     driver-class-name: org.postgresql.Driver

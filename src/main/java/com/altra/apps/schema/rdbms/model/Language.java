@@ -17,12 +17,10 @@ import javax.persistence.*;
 @Audited
 public class Language {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private String shortCode, title;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "block_id")
-    @JsonIgnore
+    @OneToOne(mappedBy = "language", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Block block;
 }

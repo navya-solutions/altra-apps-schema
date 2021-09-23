@@ -17,11 +17,9 @@ import java.io.Serializable;
 
 public class CurriculumChangeRequest implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @Column(nullable = false, unique = true)
-    private String pid;
     private String refId;
     private String userRefId;
     @Enumerated(EnumType.STRING)
@@ -33,7 +31,7 @@ public class CurriculumChangeRequest implements Serializable {
     private String changeDescription;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "Curriculum_id")
+    @JoinColumn(name = "curriculum_id", foreignKey=@ForeignKey(name="curriculum_change_request"))
     @JsonIgnore
     private Curriculum curriculum;
 

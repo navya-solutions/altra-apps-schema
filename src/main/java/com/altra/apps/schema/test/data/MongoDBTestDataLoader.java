@@ -27,7 +27,7 @@ public class MongoDBTestDataLoader implements TestDataLoader {
 
     @Override
     public void testDataLoader() {
-        generateMongoDBTestData();
+        //generateMongoDBTestData();
     }
 
 

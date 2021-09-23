@@ -32,10 +32,8 @@ import java.util.Set;
 
 public class Block implements Serializable {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-    @Column(nullable = false, unique = true)
-    private String pid;
     private boolean hasPublicAccess;
     private boolean archived;
     private String url;
@@ -46,13 +44,16 @@ public class Block implements Serializable {
     private BlockType block;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "topic_id")
+    @JoinColumn(name = "topic_id", foreignKey=@ForeignKey(name="block_topic"))
     @JsonIgnore
     @NotAudited
     private Topic topic;
 
-    @OneToMany(mappedBy = "block", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private Set<Language> languages = new HashSet<>();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "language_id", foreignKey=@ForeignKey(name="block_language"))
+    @JsonIgnore
+    @NotAudited
+    private Language language;
     @NotAudited
     @OneToMany(mappedBy = "block", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<BlockTag> tags = new HashSet<>();
@@ -66,10 +67,6 @@ public class Block implements Serializable {
     // contain the reference pid of the newly created block using copy/download block function
     private String refBlockPid;
 
-    public void addLanguage(Language language) {
-        this.languages.add(language);
-        language.setBlock(this);
-    }
 
     public void addTag(BlockTag blockTag) {
         this.tags.add(blockTag);

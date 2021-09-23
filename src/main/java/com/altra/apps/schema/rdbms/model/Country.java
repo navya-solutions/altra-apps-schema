@@ -13,14 +13,11 @@ import javax.persistence.*;
 public class Country {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-    @Column(nullable = false, unique = true)
-    private String pid;
-    private String title, shortCode;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "Curriculum_id")
-    @JsonIgnore
+    private String name, iso3ShortCode;
+
+    @OneToOne(mappedBy = "country", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Curriculum curriculum;
 
     @Override

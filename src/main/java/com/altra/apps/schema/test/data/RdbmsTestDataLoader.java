@@ -28,7 +28,6 @@ public class RdbmsTestDataLoader implements TestDataLoader {
 
     private TopicLabel getTopicLabel(int Sequence, String topicLabelTitle) {
         final TopicLabel topicLabel = new TopicLabel();
-        topicLabel.setPid(getUniqueId());
         topicLabel.setSequence(Sequence);
         topicLabel.setTitle(topicLabelTitle);
         return topicLabel;
@@ -44,8 +43,7 @@ public class RdbmsTestDataLoader implements TestDataLoader {
 
         // create curriculum
         Curriculum curriculum = new Curriculum();
-        curriculum.setPid(getUniqueId());
-        curriculum.addCountry(getCountry());
+        //curriculum.setCountry(getCountry());
         curriculum.setHasPublicAccess(true);
         curriculum.setDescription("Curriculum for Excellence places learners at the heart of education. At its centre are four fundamental capacities...");
         curriculum.setTitle("Curriculum for Excellence");
@@ -139,7 +137,6 @@ public class RdbmsTestDataLoader implements TestDataLoader {
                            Curriculum curriculum,
                            TopicLabel topicLabel) {
         Topic topic = new Topic();
-        topic.setPid(CustomUtils.getUniqueId());
         topic.setTitle(title);
         topic.setLabel(label);
         topic.setHasChildren(hasChildren);
@@ -157,10 +154,10 @@ public class RdbmsTestDataLoader implements TestDataLoader {
         block.setArchived(false);
         block.setCreatedTime(CustomUtils.getEpochCurrentTime());
         block.setLastEditedTime(CustomUtils.getEpochCurrentTime());
-        block.setPid(getUniqueId());
         final Language language = new Language();
         language.setTitle("ENGLISH");
-        block.addLanguage(language);
+        //TODO:: Need to create language first and assign to block
+        //block.setLanguage(language);
         return block;
     }
 
@@ -173,14 +170,12 @@ public class RdbmsTestDataLoader implements TestDataLoader {
         changeRequest.setRefId(getUniqueId());
         changeRequest.setUserRefId(getUniqueId());
         changeRequest.setChangeDescription("Change Level name NATIONAL_5 to NATIONAL_6");
-        changeRequest.setPid(getUniqueId());
         return changeRequest;
     }
 
 
     private Topic getTopic(String title) {
         Topic topic = new Topic();
-        topic.setPid(getUniqueId());
         topic.setDescription(String.format("%s description", title));
         topic.setTitle(title);
         return topic;
@@ -189,8 +184,7 @@ public class RdbmsTestDataLoader implements TestDataLoader {
 
     private Country getCountry() {
         final Country country = new Country();
-        country.setPid(getUniqueId());
-        country.setTitle("SCOTLAND");
+        country.setName("SCOTLAND");
         return country;
     }
 

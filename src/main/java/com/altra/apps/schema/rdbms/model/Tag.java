@@ -19,7 +19,7 @@ import javax.persistence.*;
 //TODO: fields need to be corrected
 public class Tag {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private String name;
     @ManyToOne(fetch = FetchType.LAZY)

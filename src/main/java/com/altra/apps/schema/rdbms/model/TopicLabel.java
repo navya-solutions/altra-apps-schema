@@ -15,14 +15,10 @@ import java.util.List;
 
 public class TopicLabel {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @Column(nullable = false, unique = true)
-    private String pid;
-
-
-    private String title;
+   private String title;
     // sequence of topic labels i.e. Subject ->1, Section ->2 etc..
     private Integer sequence;
 
@@ -31,7 +27,7 @@ public class TopicLabel {
     private List<Topic> topics = new LinkedList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "curriculum_id")
+    @JoinColumn(name = "curriculum_id", foreignKey=@ForeignKey(name="curriculum_topic_label"))
     @JsonIgnore
     private Curriculum curriculum;
 
