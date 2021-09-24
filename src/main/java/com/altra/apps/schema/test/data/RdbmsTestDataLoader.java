@@ -2,6 +2,7 @@ package com.altra.apps.schema.test.data;
 
 import com.altra.apps.schema.common.*;
 import com.altra.apps.schema.rdbms.model.*;
+import com.altra.apps.schema.rdbms.repository.UserRepository;
 import com.altra.apps.schema.rdbms.service.CurriculumService;
 import com.altra.apps.schema.type.PageBlockType;
 import lombok.AllArgsConstructor;
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 public class RdbmsTestDataLoader implements TestDataLoader {
 
     private final CurriculumService curriculumService;
+    private final UserRepository userRepository;
     //private final CurriculumElasticSearchRepository curriculumElasticSearchRepository;
 
 
@@ -40,7 +42,12 @@ public class RdbmsTestDataLoader implements TestDataLoader {
             return;
         }
 
-
+        //create user
+        User user = new User();
+        user.setCreatedTime(CustomUtils.getEpochCurrentTime());
+        user.setName("test user");
+        user.setBioData("test user bio");
+        final User dbUser = userRepository.save(user);
         // create curriculum
         Curriculum curriculum = new Curriculum();
         //curriculum.setCountry(getCountry());
@@ -67,7 +74,7 @@ public class RdbmsTestDataLoader implements TestDataLoader {
                 .collect(Collectors.toSet());
 
         // create curriculum change request
-        final CurriculumChangeRequest changeRequest = getCurriculumChangeRequest();
+        final CurriculumChangeRequest changeRequest = getCurriculumChangeRequest(dbUser);
         curriculum.addCurriculumSuggestions(changeRequest);
 
         //----Topic Labels --> Subject ---------------------------------------
@@ -164,13 +171,13 @@ public class RdbmsTestDataLoader implements TestDataLoader {
     }
 
 
-    private CurriculumChangeRequest getCurriculumChangeRequest() {
+    private CurriculumChangeRequest getCurriculumChangeRequest(User dbUser) {
         final CurriculumChangeRequest changeRequest = new CurriculumChangeRequest();
         changeRequest.setType(ChangeRequestTypeEnum.UPDATE);
         changeRequest.setObjectType(ChangeRequestObjectTypeEnum.TOPIC);
         changeRequest.setStatus(ChangeRequestStatusTypeEnum.SUBMITTED);
         changeRequest.setRefObjectId(1);
-        changeRequest.setUserId(1);
+        changeRequest.setUser(dbUser);
         changeRequest.setChangeDescription("Change Level name NATIONAL_5 to NATIONAL_6");
         return changeRequest;
     }

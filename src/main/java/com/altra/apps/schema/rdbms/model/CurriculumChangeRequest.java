@@ -25,8 +25,10 @@ public class CurriculumChangeRequest implements Serializable {
     @Enumerated(EnumType.STRING)
     private ChangeRequestObjectTypeEnum objectType;
 
-    @Column(nullable = false)
-    private Integer userId;
+    @OneToOne
+    @JoinColumn(name = "user_id",nullable = false, foreignKey = @ForeignKey(name = "user_curriculum_change_request"))
+    private User user;
+
     @Enumerated(EnumType.STRING)
     private ChangeRequestTypeEnum type;
     @Enumerated(EnumType.STRING)
@@ -34,6 +36,7 @@ public class CurriculumChangeRequest implements Serializable {
     @Lob
     private String changeDescription;
     private String comment;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "curriculum_id", foreignKey = @ForeignKey(name = "curriculum_change_request"))

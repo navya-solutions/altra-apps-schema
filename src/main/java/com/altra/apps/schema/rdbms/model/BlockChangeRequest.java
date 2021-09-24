@@ -19,15 +19,26 @@ public class BlockChangeRequest implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-    private String refId;
-    private String userRefId;
+    private String refObjectId;
+
     @Enumerated(EnumType.STRING)
-    private ChangeRequestTypeEnum changeRequestTypeEnum;
+    private BlockTypeEnum blockType;
+
+    @OneToOne
+    @JoinColumn(name = "user_id", nullable = false, foreignKey = @ForeignKey(name = "user_block_change_request"))
+    private User user;
+
+
     @Enumerated(EnumType.STRING)
-    private ChangeRequestStatusTypeEnum changeRequestStatusTypeEnum;
+    private ChangeRequestTypeEnum type;
+
     @Enumerated(EnumType.STRING)
-    private BlockTypeEnum changeRequestBlockType;
+    private ChangeRequestStatusTypeEnum status;
+
+    @Lob
     private String changeDescription;
+    private String comment;
+
 
 
     @ManyToOne(fetch = FetchType.LAZY)

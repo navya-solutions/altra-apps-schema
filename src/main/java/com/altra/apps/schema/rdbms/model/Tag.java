@@ -18,15 +18,18 @@ public class Tag {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @Column(nullable = false)
-    private String tagName;
+    @OneToOne
+    @JoinColumn(name = "block_id", foreignKey = @ForeignKey(name = "user_block_tag"))
+    private Block block;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private TagTypeEnum type;
+    @OneToOne
+    @JoinColumn(name = "topic_id", foreignKey = @ForeignKey(name = "user_topic_tag"))
+    private Topic topic;
 
-    @Column(nullable = false)
-    private Integer typeRefId;
+    @OneToOne
+    @JoinColumn(name = "curriculum_id", foreignKey = @ForeignKey(name = "user_curriculum_tag"))
+    private Curriculum curriculum;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_interests_id", foreignKey = @ForeignKey(name = "user_interests"))
