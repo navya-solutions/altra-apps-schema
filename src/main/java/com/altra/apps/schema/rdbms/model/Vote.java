@@ -1,6 +1,5 @@
 package com.altra.apps.schema.rdbms.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,21 +10,21 @@ import javax.persistence.*;
 @Setter
 @EqualsAndHashCode
 @Entity
-@Table(name = "BLOCK_TAG")
-public class BlockTag {
+@Table(name = "Vote")
+public class Vote {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
+    private Long votingPlusCount, VotingMinusCount;
+    private String userComment;
+
     @OneToOne
-    @JoinColumn(name = "topic_id", foreignKey=@ForeignKey(name="block_tag_topic"))
-    private Topic topic;
+    @JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "user_vote"))
+    private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "block_id", foreignKey=@ForeignKey(name="block_block_tag"))
-    @JsonIgnore
+    @JoinColumn(name = "block_id", foreignKey = @ForeignKey(name = "block_vote"))
     private Block block;
-
-
 
 }

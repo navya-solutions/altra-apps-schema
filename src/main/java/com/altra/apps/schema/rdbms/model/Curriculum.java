@@ -23,12 +23,17 @@ public class Curriculum implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     //anyone can see this curriculum.
-    private boolean hasPubliclyAccessible;
+    private boolean publiclyAccessible;
     @Column(nullable = false)
     private String name, shortTitle;
 
     @Lob
     private String description;
+
+    //Copy the source curriculum id to newly created curriculum
+    private String refCurriculumId;
+
+    private Long createdTime, lastEditedTime;
 
     /*    @Enumerated(EnumType.STRING)
         @Column(nullable = false)
@@ -55,8 +60,6 @@ public class Curriculum implements Serializable {
     @JsonIgnore
     private Country country;
 
-    //Contain the source Curriculum reference pid from newly created Curriculum is copied
-    private String refCurriculumId;
 
 
     public void addTopicLabel(TopicLabel topicLabel) {

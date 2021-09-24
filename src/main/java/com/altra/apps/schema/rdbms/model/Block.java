@@ -34,38 +34,43 @@ public class Block implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-    private boolean hasPublicAccess;
+    private boolean publiclyAccessible;
     private boolean archived;
     private String url;
     @Enumerated(EnumType.STRING)
-    private BlockTypeEnum blockType;// block type
+    private BlockTypeEnum type;// block type
     @Type(type = "json")
     @Column(columnDefinition = "json")
     private BlockType block;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "topic_id", foreignKey=@ForeignKey(name="block_topic"))
+    @JoinColumn(name = "topic_id", foreignKey = @ForeignKey(name = "block_topic"))
     @JsonIgnore
     @NotAudited
     private Topic topic;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "language_id", foreignKey=@ForeignKey(name="block_language"))
+    @JoinColumn(name = "language_id", foreignKey = @ForeignKey(name = "block_language"))
     @JsonIgnore
     @NotAudited
     private Language language;
+
     @NotAudited
     @OneToMany(mappedBy = "block", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<BlockTag> tags = new HashSet<>();
+
     @NotAudited
     @OneToMany(mappedBy = "block", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private Set<BlockChangeRequest> curriculumSuggestions = new HashSet<>();
+    private Set<BlockChangeRequest> blockChangeRequests = new HashSet<>();
 
-    private Long votingPlusCount, VotingMinusCount;
+    @NotAudited
+    @OneToMany(mappedBy = "block", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private Set<Vote> votes = new HashSet<>();
+
     // Unix epoch format
     private Long createdTime, lastEditedTime;
-    // contain the reference pid of the newly created block using copy/download block function
-    private String refBlockPid;
+    // Copy the source block id to newly created block
+    private String refBlockId;
 
 
     public void addTag(BlockTag blockTag) {

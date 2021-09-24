@@ -27,13 +27,14 @@ public class User {
     @JoinColumn(name = "role_id", foreignKey = @ForeignKey(name = "user_role"))
     private Role role;
     @OneToOne
-    @JoinColumn(name = "institution_id")
+    @JoinColumn(name = "institution_id",foreignKey = @ForeignKey(name = "user_institution"))
     private Institution institution;
     @OneToOne
     @JoinColumn(name = "subscription_id", foreignKey = @ForeignKey(name = "user_subscription"))
-    private SubscriptionType SubscriptionType;
+    private Subscription Subscription;
 
     @OneToMany(mappedBy = "userInterests", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<Tag> tags = new HashSet<>();
+    private Long createdTime, lastEditedTime;
 
 }

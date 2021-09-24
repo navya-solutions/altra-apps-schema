@@ -44,7 +44,7 @@ public class RdbmsTestDataLoader implements TestDataLoader {
         // create curriculum
         Curriculum curriculum = new Curriculum();
         //curriculum.setCountry(getCountry());
-        curriculum.setHasPubliclyAccessible(true);
+        curriculum.setPubliclyAccessible(true);
         curriculum.setDescription("Curriculum for Excellence places learners at the heart of education. At its centre are four fundamental capacities...");
         curriculum.setName("Curriculum for Excellence");
         curriculum.setShortTitle("CFE");
@@ -117,7 +117,7 @@ public class RdbmsTestDataLoader implements TestDataLoader {
 
         // create block container to store different block types
         Block block = getBlock();
-        block.setBlockType(BlockTypeEnum.page);
+        block.setType(BlockTypeEnum.page);
         // add page block
         final PageBlockType pageBlockType = getPageBlockType();
         block.setBlock(pageBlockType);
