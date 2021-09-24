@@ -21,16 +21,16 @@ public class Tag {
     @Column(nullable = false)
     private String tagName;
 
-    @Column(nullable = false)
-    private String refId;
-
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private TagTypeEnum tagTypeEnum;
+    private TagTypeEnum type;
+
+    @Column(nullable = false)
+    private Integer typeRefId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_interests_id", foreignKey = @ForeignKey(name = "user_subscription"))
+    @JoinColumn(name = "user_interests_id", foreignKey = @ForeignKey(name = "user_interests"))
     @JsonIgnore
-    private Tag userInterests;
+    private User userInterests;
 
 }

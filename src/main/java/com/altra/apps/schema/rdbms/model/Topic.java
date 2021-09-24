@@ -5,8 +5,10 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -22,7 +24,10 @@ public class Topic {
 
     private String topicUnitTitle;
 
-    private Integer sameAs, similarTo;
+    /* This field is used to manage the different type of relationships between topics, for example sameAs, similarTo etc.
+    This mapping can be done across the curriculums*/
+    @OneToMany(mappedBy = "topic", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private Set<IdenticalTopic> identicalTopics = new HashSet<>();
 
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     //@JsonIgnore
