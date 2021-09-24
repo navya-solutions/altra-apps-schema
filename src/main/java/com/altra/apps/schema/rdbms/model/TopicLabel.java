@@ -17,17 +17,18 @@ public class TopicLabel {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-
-   private String title;
-    // sequence of topic labels i.e. Subject ->1, Section ->2 etc..
-    private Integer sequence;
+    @Column(nullable = false)
+    private String title;
+    //Used to define the topic label order in the curriculum i.e. Subject ->1, Section ->2 etc..
+    @Column(nullable = false)
+    private Integer orderId;
 
     @OneToMany(mappedBy = "topicLabel", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Topic> topics = new LinkedList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "curriculum_id", foreignKey=@ForeignKey(name="curriculum_topic_label"))
+    @JoinColumn(name = "curriculum_id", foreignKey = @ForeignKey(name = "curriculum_topic_label"))
     @JsonIgnore
     private Curriculum curriculum;
 

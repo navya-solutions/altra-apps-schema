@@ -1,8 +1,8 @@
 package com.altra.apps.schema.rdbms.model;
 
 import com.altra.apps.schema.common.BlockTypeEnum;
-import com.altra.apps.schema.common.ChangeRequestStatusType;
-import com.altra.apps.schema.common.ChangeRequestType;
+import com.altra.apps.schema.common.ChangeRequestStatusTypeEnum;
+import com.altra.apps.schema.common.ChangeRequestTypeEnum;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,9 +22,9 @@ public class BlockChangeRequest implements Serializable {
     private String refId;
     private String userRefId;
     @Enumerated(EnumType.STRING)
-    private ChangeRequestType changeRequestType;
+    private ChangeRequestTypeEnum changeRequestTypeEnum;
     @Enumerated(EnumType.STRING)
-    private ChangeRequestStatusType changeRequestStatusType;
+    private ChangeRequestStatusTypeEnum changeRequestStatusTypeEnum;
     @Enumerated(EnumType.STRING)
     private BlockTypeEnum changeRequestBlockType;
     private String changeDescription;

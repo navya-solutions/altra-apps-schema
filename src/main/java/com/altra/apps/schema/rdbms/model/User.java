@@ -18,19 +18,22 @@ public class User {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private String name, displayName;
+    @Lob
+    private String bioData;
+    private String avatarUrl;
+    private String email, phoneNumber;
     // TODO: one-to-one Or one-to-many ??
     @OneToOne
-    @JoinColumn(name = "role_id", nullable = false)
+    @JoinColumn(name = "role_id", foreignKey = @ForeignKey(name = "user_role"))
     private Role role;
     @OneToOne
     @JoinColumn(name = "institution_id")
     private Institution institution;
     @OneToOne
-    @JoinColumn(name = "subscription_id", nullable = false)
+    @JoinColumn(name = "subscription_id", foreignKey = @ForeignKey(name = "user_subscription"))
     private SubscriptionType SubscriptionType;
 
-    @OneToMany(mappedBy = "topicInterests", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private Set<Tag> topicInterests = new HashSet<>();
-    @OneToMany(mappedBy = "levelInterests", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private Set<Tag> levelInterests = new HashSet<>();
+    @OneToMany(mappedBy = "userInterests", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private Set<Tag> tags = new HashSet<>();
+
 }

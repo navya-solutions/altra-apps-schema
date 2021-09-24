@@ -1,5 +1,6 @@
 package com.altra.apps.schema.rdbms.model;
 
+import com.altra.apps.schema.common.TagTypeEnum;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -12,23 +13,24 @@ import javax.persistence.*;
 @EqualsAndHashCode
 @Entity
 @Table(name = "Tag")
-/**
- * Possible values are:
- * DEPARTMENT_HEAD,PRIVATE_TUTOR,SENIOR_MANAGEMENT,STUDENT,TEACHER
- */
-//TODO: fields need to be corrected
 public class Tag {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-    private String name;
+
+    @Column(nullable = false)
+    private String tagName;
+
+    @Column(nullable = false)
+    private String refId;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private TagTypeEnum tagTypeEnum;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "topic_interests_id")
+    @JoinColumn(name = "user_interests_id", foreignKey = @ForeignKey(name = "user_subscription"))
     @JsonIgnore
-    private Tag topicInterests;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "level_interests_id")
-    @JsonIgnore
-    private Tag levelInterests;
+    private Tag userInterests;
 
 }

@@ -15,7 +15,9 @@ public class Country {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-    private String name, iso3ShortCode;
+    @Column(nullable = false)
+    //
+    private String name, code;//iso3ShortCode
 
     @OneToOne(mappedBy = "country", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Curriculum curriculum;

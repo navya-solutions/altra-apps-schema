@@ -23,8 +23,12 @@ public class Curriculum implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     //anyone can see this curriculum.
-    private boolean hasPublicAccess;
-    private String title, shortTitle, description;
+    private boolean hasPubliclyAccessible;
+    @Column(nullable = false)
+    private String name, shortTitle;
+
+    @Lob
+    private String description;
 
     /*    @Enumerated(EnumType.STRING)
         @Column(nullable = false)
@@ -36,23 +40,23 @@ public class Curriculum implements Serializable {
 
 
     @OneToMany(mappedBy = "curriculum", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private Set<CurriculumChangeRequest> curriculumSuggestions = new HashSet<>();
+    private Set<CurriculumChangeRequest> curriculumChangeRequests = new HashSet<>();
 
     @OneToMany(mappedBy = "curriculum", cascade = CascadeType.ALL, orphanRemoval = false, fetch = FetchType.LAZY)
     private Set<Topic> topics = new HashSet<>();
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(foreignKey=@ForeignKey(name="curriculum_institution"))
+    @JoinColumn(foreignKey = @ForeignKey(name = "curriculum_institution"))
     @JsonIgnore
     private Institution institution;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(foreignKey=@ForeignKey(name="curriculum_country"))
+    @JoinColumn(foreignKey = @ForeignKey(name = "curriculum_country"))
     @JsonIgnore
     private Country country;
 
-    // contain the reference pid of the newly created curriculum using copy/download curriculum function
-    private String refCurriculumPid;
+    //Contain the source Curriculum reference pid from newly created Curriculum is copied
+    private String refCurriculumId;
 
 
     public void addTopicLabel(TopicLabel topicLabel) {
@@ -61,7 +65,7 @@ public class Curriculum implements Serializable {
     }
 
     public void addCurriculumSuggestions(CurriculumChangeRequest suggestions) {
-        this.curriculumSuggestions.add(suggestions);
+        this.curriculumChangeRequests.add(suggestions);
         suggestions.setCurriculum(this);
     }
 
@@ -69,7 +73,6 @@ public class Curriculum implements Serializable {
         this.topics.add(topic);
         topic.setCurriculum(this);
     }
-
 
 
     @Override

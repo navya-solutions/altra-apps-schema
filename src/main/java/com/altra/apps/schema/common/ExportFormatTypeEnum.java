@@ -1,5 +1,5 @@
 package com.altra.apps.schema.common;
 
-public enum ExportFormatType {
+public enum ExportFormatTypeEnum {
     POWERPOINT, PDF;
 }

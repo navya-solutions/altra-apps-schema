@@ -1,8 +1,8 @@
 package com.altra.apps.schema.mongodb.model;
 
-import com.altra.apps.schema.common.ChangeRequestObjectType;
-import com.altra.apps.schema.common.ChangeRequestStatusType;
-import com.altra.apps.schema.common.ChangeRequestType;
+import com.altra.apps.schema.common.ChangeRequestObjectTypeEnum;
+import com.altra.apps.schema.common.ChangeRequestStatusTypeEnum;
+import com.altra.apps.schema.common.ChangeRequestTypeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,9 +23,9 @@ public class CurriculumChangeRequest implements Serializable {
     private String id;
     private String refId;
     private String userRefId;
-    private ChangeRequestType changeRequestType;
-    private ChangeRequestStatusType changeRequestStatusType;
-    private ChangeRequestObjectType changeRequestObjectType;
+    private ChangeRequestTypeEnum changeRequestTypeEnum;
+    private ChangeRequestStatusTypeEnum changeRequestStatusTypeEnum;
+    private ChangeRequestObjectTypeEnum changeRequestObjectTypeEnum;
     private String changeDescription;
 
     @DBRef(lazy = true)

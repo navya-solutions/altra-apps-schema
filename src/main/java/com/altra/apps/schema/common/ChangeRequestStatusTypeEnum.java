@@ -1,5 +1,5 @@
 package com.altra.apps.schema.common;
 
-public enum ChangeRequestStatusType {
+public enum ChangeRequestStatusTypeEnum {
     SUBMITTED, APPROVE, REJECT;
 }

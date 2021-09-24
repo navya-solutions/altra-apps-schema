@@ -1,8 +1,8 @@
 package com.altra.apps.schema.rdbms.model;
 
-import com.altra.apps.schema.common.ChangeRequestObjectType;
-import com.altra.apps.schema.common.ChangeRequestStatusType;
-import com.altra.apps.schema.common.ChangeRequestType;
+import com.altra.apps.schema.common.ChangeRequestObjectTypeEnum;
+import com.altra.apps.schema.common.ChangeRequestStatusTypeEnum;
+import com.altra.apps.schema.common.ChangeRequestTypeEnum;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,19 +19,24 @@ public class CurriculumChangeRequest implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
+    @Column(nullable = false)
+    private Integer refObjectId;
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private ChangeRequestObjectTypeEnum objectType;
 
-    private String refId;
-    private String userRefId;
+    @Column(nullable = false)
+    private Integer userId;
     @Enumerated(EnumType.STRING)
-    private ChangeRequestType changeRequestType;
+    private ChangeRequestTypeEnum type;
     @Enumerated(EnumType.STRING)
-    private ChangeRequestStatusType changeRequestStatusType;
-    @Enumerated(EnumType.STRING)
-    private ChangeRequestObjectType changeRequestObjectType;
+    private ChangeRequestStatusTypeEnum status;
+    @Lob
     private String changeDescription;
+    private String comment;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "curriculum_id", foreignKey=@ForeignKey(name="curriculum_change_request"))
+    @JoinColumn(name = "curriculum_id", foreignKey = @ForeignKey(name = "curriculum_change_request"))
     @JsonIgnore
     private Curriculum curriculum;
 

@@ -1,5 +1,5 @@
 package com.altra.apps.schema.common;
 
-public enum ChangeRequestType {
+public enum ChangeRequestTypeEnum {
     CREATE, UPDATE, DELETE;
 }

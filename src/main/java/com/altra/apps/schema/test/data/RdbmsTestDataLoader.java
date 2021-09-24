@@ -28,7 +28,7 @@ public class RdbmsTestDataLoader implements TestDataLoader {
 
     private TopicLabel getTopicLabel(int Sequence, String topicLabelTitle) {
         final TopicLabel topicLabel = new TopicLabel();
-        topicLabel.setSequence(Sequence);
+        topicLabel.setOrderId(Sequence);
         topicLabel.setTitle(topicLabelTitle);
         return topicLabel;
     }
@@ -44,9 +44,9 @@ public class RdbmsTestDataLoader implements TestDataLoader {
         // create curriculum
         Curriculum curriculum = new Curriculum();
         //curriculum.setCountry(getCountry());
-        curriculum.setHasPublicAccess(true);
+        curriculum.setHasPubliclyAccessible(true);
         curriculum.setDescription("Curriculum for Excellence places learners at the heart of education. At its centre are four fundamental capacities...");
-        curriculum.setTitle("Curriculum for Excellence");
+        curriculum.setName("Curriculum for Excellence");
         curriculum.setShortTitle("CFE");
         //curriculum.setCurriculumTopicLabels(CurriculumTopicLabelsEnum.SUBJECT_TOPIC_KEYISSUES_EXPLANATION);
 
@@ -124,6 +124,8 @@ public class RdbmsTestDataLoader implements TestDataLoader {
         // set unit block association
         subjectTopicMaths.addBlock(block);
 
+        // add physical education question paper
+
         // save curriculum
         final Curriculum curriculum1 = curriculumService.addCurriculum(curriculum);
         //curriculumElasticSearchRepository.save(curriculum);
@@ -138,12 +140,12 @@ public class RdbmsTestDataLoader implements TestDataLoader {
                            TopicLabel topicLabel) {
         Topic topic = new Topic();
         topic.setTitle(title);
-        topic.setLabel(label);
+        //topic.setLabel(label);
         topic.setHasChildren(hasChildren);
         topic.setCurriculum(curriculum);
         topic.setTopicLabel(topicLabel);
-        if (topic.getTopicLabel().getSequence() == 1)
-            topic.setTopicUnitTitle(title);
+        if (topic.getTopicLabel().getOrderId() == 1)
+            topic.setTopicUnitTitle(String.format("%s#%s", title, curriculum.getShortTitle()));
         return topic;
     }
 
@@ -155,7 +157,7 @@ public class RdbmsTestDataLoader implements TestDataLoader {
         block.setCreatedTime(CustomUtils.getEpochCurrentTime());
         block.setLastEditedTime(CustomUtils.getEpochCurrentTime());
         final Language language = new Language();
-        language.setTitle("ENGLISH");
+        language.setName("ENGLISH");
         //TODO:: Need to create language first and assign to block
         //block.setLanguage(language);
         return block;
@@ -164,11 +166,11 @@ public class RdbmsTestDataLoader implements TestDataLoader {
 
     private CurriculumChangeRequest getCurriculumChangeRequest() {
         final CurriculumChangeRequest changeRequest = new CurriculumChangeRequest();
-        changeRequest.setChangeRequestType(ChangeRequestType.UPDATE);
-        changeRequest.setChangeRequestObjectType(ChangeRequestObjectType.LEVEL);
-        changeRequest.setChangeRequestStatusType(ChangeRequestStatusType.SUBMITTED);
-        changeRequest.setRefId(getUniqueId());
-        changeRequest.setUserRefId(getUniqueId());
+        changeRequest.setType(ChangeRequestTypeEnum.UPDATE);
+        changeRequest.setObjectType(ChangeRequestObjectTypeEnum.TOPIC);
+        changeRequest.setStatus(ChangeRequestStatusTypeEnum.SUBMITTED);
+        changeRequest.setRefObjectId(1);
+        changeRequest.setUserId(1);
         changeRequest.setChangeDescription("Change Level name NATIONAL_5 to NATIONAL_6");
         return changeRequest;
     }

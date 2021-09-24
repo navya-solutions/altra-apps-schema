@@ -22,6 +22,8 @@ public class SubscriptionType {
     @JsonIgnore
     private Long id;
     private String name, description;
+    private double monthlyPrice,quarterlyPrice,yearlyPrice;
+    private double discount;
 
 
 }

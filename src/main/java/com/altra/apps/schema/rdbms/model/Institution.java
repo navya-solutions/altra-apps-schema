@@ -16,8 +16,9 @@ public class Institution {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-
-    private String name, refId, description;
+    @Column(nullable = false)
+    private String name;
+    private String  refId, description;
 
     @OneToOne(mappedBy = "institution", optional = false , cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Curriculum curriculum;
