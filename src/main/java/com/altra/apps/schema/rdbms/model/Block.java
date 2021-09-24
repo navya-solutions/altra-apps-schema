@@ -26,7 +26,7 @@ import java.util.Set;
 @TypeDefs({
         @TypeDef(name = "json", typeClass = JsonType.class)
 })
-@Audited
+//@Audited
 //https://github.com/google/diff-match-patch for diff match patch
 //https://neil.fraser.name/writing/diff/
 
@@ -40,30 +40,30 @@ public class Block implements Serializable {
     @Enumerated(EnumType.STRING)
     private BlockTypeEnum type;// block type
     @Type(type = "json")
-    @Column(columnDefinition = "json")
+    @Column(columnDefinition = "jsonb")
     private BlockType block;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "topic_id", foreignKey = @ForeignKey(name = "block_topic"))
     @JsonIgnore
-    @NotAudited
+    //@NotAudited
     private Topic topic;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "language_id", foreignKey = @ForeignKey(name = "block_language"))
     @JsonIgnore
-    @NotAudited
+    //@NotAudited
     private Language language;
 
-    @NotAudited
+    //@NotAudited
     @OneToMany(mappedBy = "block", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<BlockTag> tags = new HashSet<>();
 
-    @NotAudited
+    //@NotAudited
     @OneToMany(mappedBy = "block", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<BlockChangeRequest> blockChangeRequests = new HashSet<>();
 
-    @NotAudited
+    //@NotAudited
     @OneToMany(mappedBy = "block", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<Vote> votes = new HashSet<>();
 

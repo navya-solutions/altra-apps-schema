@@ -13,7 +13,7 @@ import javax.persistence.*;
 @EqualsAndHashCode
 @Entity
 @Table(name = "LANGUAGE")
-@Audited
+//@Audited
 public class Language {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
