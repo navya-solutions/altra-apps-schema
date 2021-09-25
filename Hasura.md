@@ -40,7 +40,6 @@ Manual changes in the liquibase schema:
 
 schema manual changes needed after exporting using ___mvn liquibase:generateChangeLog___
 - Change all  "id" BIGINT --> "id" SERIAL 
-- Change "block" JSON --> "block" JSONB 
 - Remove "CREATE SEQUENCE"
 
 5. Create migration manually

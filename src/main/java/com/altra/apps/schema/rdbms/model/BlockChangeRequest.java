@@ -9,6 +9,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -26,8 +28,11 @@ public class BlockChangeRequest implements Serializable {
 
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false, foreignKey = @ForeignKey(name = "user_block_change_request"))
-    private User user;
+    private User requester;
+    private String comment;
 
+    @OneToMany(mappedBy = "blockChangeRequest", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private Set<UserComment> userComments = new HashSet<>();
 
     @Enumerated(EnumType.STRING)
     private ChangeRequestTypeEnum type;
@@ -37,8 +42,6 @@ public class BlockChangeRequest implements Serializable {
 
     @Lob
     private String changeDescription;
-    private String comment;
-
 
 
     @ManyToOne(fetch = FetchType.LAZY)

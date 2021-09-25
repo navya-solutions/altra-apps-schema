@@ -9,6 +9,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -25,9 +27,13 @@ public class CurriculumChangeRequest implements Serializable {
     @Enumerated(EnumType.STRING)
     private ChangeRequestObjectTypeEnum objectType;
 
+    @OneToMany(mappedBy = "curriculumChangeRequest", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private Set<UserComment> userComments = new HashSet<>();
+
     @OneToOne
-    @JoinColumn(name = "user_id",nullable = false, foreignKey = @ForeignKey(name = "user_curriculum_change_request"))
-    private User user;
+    @JoinColumn(name = "user_id", nullable = false, foreignKey = @ForeignKey(name = "requester_user_curriculum_change_request"))
+    private User requester;
+    private String comment;
 
     @Enumerated(EnumType.STRING)
     private ChangeRequestTypeEnum type;
@@ -35,7 +41,6 @@ public class CurriculumChangeRequest implements Serializable {
     private ChangeRequestStatusTypeEnum status;
     @Lob
     private String changeDescription;
-    private String comment;
 
 
     @ManyToOne(fetch = FetchType.LAZY)

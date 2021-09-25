@@ -177,7 +177,7 @@ public class RdbmsTestDataLoader implements TestDataLoader {
         changeRequest.setObjectType(ChangeRequestObjectTypeEnum.TOPIC);
         changeRequest.setStatus(ChangeRequestStatusTypeEnum.SUBMITTED);
         changeRequest.setRefObjectId(1);
-        changeRequest.setUser(dbUser);
+        changeRequest.setRequester(dbUser);
         changeRequest.setChangeDescription("Change Level name NATIONAL_5 to NATIONAL_6");
         return changeRequest;
     }
