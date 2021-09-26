@@ -1,6 +1,5 @@
 package com.altra.apps.schema.rdbms.model;
 
-import com.altra.apps.schema.common.TagTypeEnum;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

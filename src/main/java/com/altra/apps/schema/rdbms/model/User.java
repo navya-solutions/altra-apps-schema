@@ -21,10 +21,11 @@ public class User {
     @Lob
     private String bioData;
     private String avatarUrl;
+    @Column(unique = true, nullable = false)
     private String email, phoneNumber;
     // TODO: one-to-one Or one-to-many ??
     @OneToOne
-    @JoinColumn(name = "role_id", foreignKey = @ForeignKey(name = "user_role"))
+    @JoinColumn(name = "role_id",  foreignKey = @ForeignKey(name = "user_role"))
     private Role role;
     @OneToOne
     @JoinColumn(name = "institution_id",foreignKey = @ForeignKey(name = "user_institution"))

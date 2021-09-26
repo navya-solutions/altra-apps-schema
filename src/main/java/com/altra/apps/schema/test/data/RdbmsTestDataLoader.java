@@ -2,6 +2,7 @@ package com.altra.apps.schema.test.data;
 
 import com.altra.apps.schema.common.*;
 import com.altra.apps.schema.rdbms.model.*;
+import com.altra.apps.schema.rdbms.repository.LanguageRepository;
 import com.altra.apps.schema.rdbms.repository.UserRepository;
 import com.altra.apps.schema.rdbms.service.CurriculumService;
 import com.altra.apps.schema.type.PageBlockType;
@@ -19,6 +20,7 @@ public class RdbmsTestDataLoader implements TestDataLoader {
 
     private final CurriculumService curriculumService;
     private final UserRepository userRepository;
+    private final LanguageRepository languageRepository;
     //private final CurriculumElasticSearchRepository curriculumElasticSearchRepository;
 
 
@@ -42,10 +44,16 @@ public class RdbmsTestDataLoader implements TestDataLoader {
             return;
         }
 
+        final Language language = new Language();
+        language.setName("EN");
+        language.setCode("English");
+        final Language save = languageRepository.save(language);
         //create user
         User user = new User();
         user.setCreatedTime(CustomUtils.getEpochCurrentTime());
         user.setName("test user");
+        user.setEmail("test@test.com");
+        user.setPhoneNumber("+46XXXXXXXXXX");
         user.setBioData("test user bio");
         final User dbUser = userRepository.save(user);
         // create curriculum

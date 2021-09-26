@@ -21,14 +21,17 @@ public class BlockChangeRequest implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
+    @Column(nullable = false)
     private String refObjectId;
 
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private BlockTypeEnum blockType;
 
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false, foreignKey = @ForeignKey(name = "user_block_change_request"))
     private User requester;
+
     private String comment;
 
     @OneToMany(mappedBy = "blockChangeRequest", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
@@ -41,6 +44,7 @@ public class BlockChangeRequest implements Serializable {
     private ChangeRequestStatusTypeEnum status;
 
     @Lob
+    @Column(nullable = false)
     private String changeDescription;
 
 

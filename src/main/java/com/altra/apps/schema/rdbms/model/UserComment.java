@@ -20,7 +20,7 @@ public class UserComment {
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false, foreignKey = @ForeignKey(name = "user_comment_change_request"))
     private User user;
-
+    @Column(nullable = false)
     private String comment;
 
     @ManyToOne(fetch = FetchType.LAZY)

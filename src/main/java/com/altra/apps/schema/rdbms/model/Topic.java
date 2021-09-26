@@ -18,11 +18,12 @@ public class Topic {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-    private String title, description;
+    @Column(nullable = false)
+    private String title, topicUnitTitle;
     //private String label;
     boolean hasChildren;
 
-    private String topicUnitTitle;
+    private String description;
 
     /* This field is used to manage the different type of relationships between topics, for example sameAs, similarTo etc.
     This mapping can be done across the curriculums*/

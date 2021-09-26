@@ -16,7 +16,7 @@ public class Vote {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    private Long votingPlusCount, VotingMinusCount;
+    private Long votingPlus, VotingMinus;
     private String userComment;
 
     @OneToOne

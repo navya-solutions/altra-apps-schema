@@ -1,6 +1,5 @@
 package com.altra.apps.schema.rdbms.model;
 
-import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import com.vladmihalcea.hibernate.type.json.JsonType;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,11 +26,13 @@ public class BlockRevision implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(nullable = false)
     private Integer revisionNo;
+    @Column(nullable = false)
     private Long revisionAt;
+
     @Type(type = "json")
-    @Column(columnDefinition = "jsonb")
+    @Column(columnDefinition = "jsonb", nullable = false)
     private Block block;
 
     @Override

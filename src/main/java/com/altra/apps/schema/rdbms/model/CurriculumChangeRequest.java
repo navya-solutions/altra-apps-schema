@@ -36,10 +36,13 @@ public class CurriculumChangeRequest implements Serializable {
     private String comment;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private ChangeRequestTypeEnum type;
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private ChangeRequestStatusTypeEnum status;
     @Lob
+    @Column(nullable = false)
     private String changeDescription;
 
 

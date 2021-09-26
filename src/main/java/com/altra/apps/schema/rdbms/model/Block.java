@@ -38,9 +38,10 @@ public class Block implements Serializable {
     private boolean archived;
     private String url;
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private BlockTypeEnum type;// block type
     @Type(type = "json")
-    @Column(columnDefinition = "jsonb")
+    @Column(columnDefinition = "jsonb", nullable = false)
     private BlockType block;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -54,6 +55,7 @@ public class Block implements Serializable {
     @JsonIgnore
     //@NotAudited
     private Language language;
+
 
     //@NotAudited
     @OneToMany(mappedBy = "block", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
