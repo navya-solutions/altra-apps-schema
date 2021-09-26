@@ -22,7 +22,8 @@ public class User {
     private String bioData;
     private String avatarUrl;
     @Column(unique = true, nullable = false)
-    private String email, phoneNumber;
+    private String email;
+    private String phoneNumber;
     // TODO: one-to-one Or one-to-many ??
     @OneToOne
     @JoinColumn(name = "role_id",  foreignKey = @ForeignKey(name = "user_role"))
@@ -36,6 +37,16 @@ public class User {
 
     @OneToMany(mappedBy = "userInterests", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<Tag> tags = new HashSet<>();
+
+    @OneToMany(mappedBy = "userInvitation", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private Set<UserInvitation> userInvitations = new HashSet<>();
+
+    @OneToMany(mappedBy = "userCurriculumAccess", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private Set<UserCurriculumAccess> userCurriculumAccesses = new HashSet<>();
+
+    @OneToMany(mappedBy = "userTopicAccess", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private Set<UserTopicAccess> userTopicAccesses = new HashSet<>();
+
     private Long createdTime, lastEditedTime;
 
 }

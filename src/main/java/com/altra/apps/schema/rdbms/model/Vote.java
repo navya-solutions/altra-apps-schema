@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Setter
 @EqualsAndHashCode
 @Entity
-@Table(name = "Vote")
+@Table(name = "VOTE")
 public class Vote {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
