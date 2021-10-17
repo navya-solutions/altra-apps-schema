@@ -9,10 +9,8 @@ import com.altra.apps.schema.type.PageBlockType;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
 import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Component
 @AllArgsConstructor
@@ -21,7 +19,6 @@ public class RdbmsTestDataLoader implements TestDataLoader {
     private final CurriculumService curriculumService;
     private final UserRepository userRepository;
     private final LanguageRepository languageRepository;
-    //private final CurriculumElasticSearchRepository curriculumElasticSearchRepository;
 
 
     @Override
@@ -57,7 +54,108 @@ public class RdbmsTestDataLoader implements TestDataLoader {
         user.setBioData("test user bio");
         final User dbUser = userRepository.save(user);
         // create curriculum
+        getCfeCurriculum(dbUser);
+
+        // create SQA curriculum
+        getSqaCurriculum();
+
         Curriculum curriculum = new Curriculum();
+        curriculum.setCreatedTime(CustomUtils.getEpochCurrentTime());
+        curriculum.setLastEditedTime(CustomUtils.getEpochCurrentTime());
+        curriculum.setPubliclyAccessible(true);
+        curriculum.setName("Framework for Swimming in Scotland");
+        curriculum.setShortTitle("Swim");
+
+        final TopicLabel topicLabel_level1 = getTopicLabel(1, "Level");
+        curriculum.addTopicLabel(topicLabel_level1);
+        final TopicLabel topicLabel_level2_1 = getTopicLabel(2, "Objective");
+        curriculum.addTopicLabel(topicLabel_level2_1);
+        final TopicLabel topicLabel_level2_2 = getTopicLabel(2, "Content Area");
+        curriculum.addTopicLabel(topicLabel_level2_2);
+
+
+        Topic topic1_label_1_subject = getTopic("Adult and Baby", "Subject", true, curriculum, topicLabel_level1);
+        Topic topic2_label_1_subject = getTopic("Adult and Toddler", "Subject", false, curriculum, topicLabel_level1);
+
+        Topic topicEurope_label_2_Section = getTopic("Handle baby confidently", "Objective", false, curriculum, topicLabel_level2_1);
+        Topic topicScotland_label_2_Section = getTopic("Quality time", "Objective", false, curriculum, topicLabel_level2_1);
+        Topic topicBritish_label_2_Section = getTopic("Entries and exits", "Content Area", false, curriculum, topicLabel_level2_2);
+
+
+        topic1_label_1_subject.addChildren(topicEurope_label_2_Section);
+        topic1_label_1_subject.addChildren(topicScotland_label_2_Section);
+        topic1_label_1_subject.addChildren(topicBritish_label_2_Section);
+
+        curriculum.setTopics(Set.of(topic1_label_1_subject, topic2_label_1_subject));
+
+        // save curriculum
+        final Curriculum curriculum1 = curriculumService.addCurriculum(curriculum);
+        CustomUtils.ObjectToJson(curriculum1);
+    }
+
+    private void getSqaCurriculum() {
+        Curriculum curriculum = new Curriculum();
+        curriculum.setCreatedTime(CustomUtils.getEpochCurrentTime());
+        curriculum.setLastEditedTime(CustomUtils.getEpochCurrentTime());
+        curriculum.setPubliclyAccessible(true);
+        curriculum.setName("SQA");
+        curriculum.setShortTitle("SQA");
+
+        final TopicLabel topicLabel_level1 = getTopicLabel(1, "Subject");
+        curriculum.addTopicLabel(topicLabel_level1);
+        final TopicLabel topicLabel_level2_1 = getTopicLabel(2, "Section");
+        curriculum.addTopicLabel(topicLabel_level2_1);
+        final TopicLabel topicLabel_level2_2 = getTopicLabel(2, "Topic");
+        curriculum.addTopicLabel(topicLabel_level2_2);
+        final TopicLabel topicLabel_level3_1 = getTopicLabel(3, "Part");
+        curriculum.addTopicLabel(topicLabel_level3_1);
+        final TopicLabel topicLabel_level3_2 = getTopicLabel(3, "KeyIssue");
+        curriculum.addTopicLabel(topicLabel_level3_2);
+
+        Topic topicMaths_label_1_subject = getTopic("Maths", "Subject", true, curriculum, topicLabel_level1);
+        Topic topicHistory_label_1_subject = getTopic("History", "Subject", true, curriculum, topicLabel_level1);
+
+        Topic topicEurope_label_2_Section = getTopic("Europe", "Section", true, curriculum, topicLabel_level2_1);
+        Topic topicScotland_label_2_Section = getTopic("Scotland", "Section", true, curriculum, topicLabel_level2_1);
+        Topic topicBritish_label_2_Section = getTopic("British", "Section", false, curriculum, topicLabel_level2_1);
+
+        Topic topicAlgebra_label_2_Section = getTopic("Algebra", "Section", true, curriculum, topicLabel_level2_2);
+        Topic topicStatistics_label_2_Section = getTopic("Statistics", "Section", true, curriculum, topicLabel_level2_2);
+
+        Topic topicCrusades_label_3_Part = getTopic("Crusades", "Part", false, curriculum, topicLabel_level3_1);
+        Topic topicHitler_label_3_Section = getTopic("Hitler", "Part", false, curriculum, topicLabel_level3_1);
+        Topic topicMary_label_3_Section = getTopic("Mary", "Part", false, curriculum, topicLabel_level3_1);
+
+        Topic topicEquations_label_3_Section = getTopic("Equations", "KeyIssue", false, curriculum, topicLabel_level3_2);
+        Topic topic_Integration_label_3_Section = getTopic("Integration", "KeyIssue", false, curriculum, topicLabel_level3_2);
+        Topic topic_LinearModel_label_3_Section = getTopic("LinearModel", "KeyIssue", false, curriculum, topicLabel_level3_2);
+
+        topicEurope_label_2_Section.addChildren(topicCrusades_label_3_Part);
+        topicEurope_label_2_Section.addChildren(topicHitler_label_3_Section);
+        topicScotland_label_2_Section.addChildren(topicMary_label_3_Section);
+
+        topicAlgebra_label_2_Section.addChildren(topicEquations_label_3_Section);
+        topicAlgebra_label_2_Section.addChildren(topic_Integration_label_3_Section);
+        topicStatistics_label_2_Section.addChildren(topic_LinearModel_label_3_Section);
+
+        topicMaths_label_1_subject.addChildren(topicAlgebra_label_2_Section);
+        topicMaths_label_1_subject.addChildren(topicStatistics_label_2_Section);
+
+        topicHistory_label_1_subject.addChildren(topicEurope_label_2_Section);
+        topicHistory_label_1_subject.addChildren(topicScotland_label_2_Section);
+        topicHistory_label_1_subject.addChildren(topicBritish_label_2_Section);
+
+        curriculum.setTopics(Set.of(topicMaths_label_1_subject, topicHistory_label_1_subject));
+
+        // save curriculum
+        final Curriculum curriculum1 = curriculumService.addCurriculum(curriculum);
+        CustomUtils.ObjectToJson(curriculum1);
+    }
+
+    private void getCfeCurriculum(User dbUser) {
+        Curriculum curriculum = new Curriculum();
+        curriculum.setCreatedTime(CustomUtils.getEpochCurrentTime());
+        curriculum.setLastEditedTime(CustomUtils.getEpochCurrentTime());
         //curriculum.setCountry(getCountry());
         curriculum.setPubliclyAccessible(true);
         curriculum.setDescription("Curriculum for Excellence places learners at the heart of education. At its centre are four fundamental capacities...");
@@ -75,11 +173,6 @@ public class RdbmsTestDataLoader implements TestDataLoader {
         curriculum.addTopicLabel(topicLabel_level3);
         final TopicLabel topicLabel_level4 = getTopicLabel(4, "Key Issues");
         curriculum.addTopicLabel(topicLabel_level4);
-
-        final String[] topicLabels = CurriculumTopicLabelsEnum.SUBJECT_TOPIC_KEYISSUES_EXPLANATION.toString().split("_");
-        Arrays.stream(topicLabels)
-                .peek(e -> System.out.println("Topic Label value: " + e))
-                .collect(Collectors.toSet());
 
         // create curriculum change request
         final CurriculumChangeRequest changeRequest = getCurriculumChangeRequest(dbUser);
@@ -186,6 +279,7 @@ public class RdbmsTestDataLoader implements TestDataLoader {
         changeRequest.setStatus(ChangeRequestStatusTypeEnum.SUBMITTED);
         changeRequest.setRefObjectId(1);
         changeRequest.setRequester(dbUser);
+        changeRequest.setCreatedTime(CustomUtils.getEpochCurrentTime());
         changeRequest.setChangeDescription("Change Level name NATIONAL_5 to NATIONAL_6");
         return changeRequest;
     }

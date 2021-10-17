@@ -28,6 +28,9 @@ public class BlockChangeRequest implements Serializable {
     @Enumerated(EnumType.STRING)
     private BlockTypeEnum blockType;
 
+    @Column(nullable = false)
+    private Long createdTime;
+
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false, foreignKey = @ForeignKey(name = "user_block_change_request"))
     private User requester;

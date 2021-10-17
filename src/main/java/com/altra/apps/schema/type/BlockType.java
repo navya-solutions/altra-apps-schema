@@ -11,6 +11,7 @@ public abstract class BlockType implements Serializable {
     BlockTypeEnum type;
     String createdTime, lastEditedTime;
     boolean hasChildren;
+    int version;
 
     public abstract BlockTypeEnum getType();
 }

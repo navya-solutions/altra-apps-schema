@@ -33,14 +33,21 @@ public class CurriculumChangeRequest implements Serializable {
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false, foreignKey = @ForeignKey(name = "requester_user_curriculum_change_request"))
     private User requester;
+
     private String comment;
+
+    @Column(nullable = false)
+    private Long createdTime;
+
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private ChangeRequestTypeEnum type;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private ChangeRequestStatusTypeEnum status;
+
     @Lob
     @Column(nullable = false)
     private String changeDescription;

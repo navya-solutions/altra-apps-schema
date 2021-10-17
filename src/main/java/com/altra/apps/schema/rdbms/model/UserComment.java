@@ -32,5 +32,7 @@ public class UserComment {
     @JoinColumn(name = "block_cr_id", foreignKey = @ForeignKey(name = "user_comment_block_change_request"))
     @JsonIgnore
     private BlockChangeRequest blockChangeRequest;
+    @Column(nullable = false)
+    private Long createdTime;
 
 }
