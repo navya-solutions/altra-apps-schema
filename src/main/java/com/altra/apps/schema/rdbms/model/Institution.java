@@ -23,5 +23,9 @@ public class Institution {
     @OneToOne(mappedBy = "institution", optional = false , cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Curriculum curriculum;
 
+    @OneToOne
+    @JoinColumn(name = "owner",foreignKey = @ForeignKey(name = "institution_owner"))
+    private User institutionOwner;
+
 
 }

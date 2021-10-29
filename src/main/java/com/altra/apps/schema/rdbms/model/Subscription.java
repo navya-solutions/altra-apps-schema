@@ -24,10 +24,12 @@ public class Subscription {
     private Long id;
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private SubscriptionTypeEnum type;
+    private SubscriptionTypeEnum plan;
     private String description;
     private double monthlyPrice, quarterlyPrice, yearlyPrice;
     private double discount;
+
+    private Long createdTime, lastEditedTime;
 
 
 }

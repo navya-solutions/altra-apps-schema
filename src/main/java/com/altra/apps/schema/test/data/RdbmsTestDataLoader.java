@@ -48,9 +48,8 @@ public class RdbmsTestDataLoader implements TestDataLoader {
         //create user
         User user = new User();
         user.setCreatedTime(CustomUtils.getEpochCurrentTime());
-        user.setName("test user");
+        user.setDisplayName("test user");
         user.setEmail("test@test.com");
-        user.setPhoneNumber("+46XXXXXXXXXX");
         user.setBioData("test user bio");
         final User dbUser = userRepository.save(user);
         // create curriculum

@@ -24,8 +24,8 @@ spring:
       ddl-auto: create-drop
         #https://vladmihalcea.com/map-camel-case-properties-snake-case-column-names-hibernate/
         #https://www.baeldung.com/hibernate-field-naming-spring-boot#customizing-strategies
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+        #physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        #implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
   h2:
     console:
       enabled: true

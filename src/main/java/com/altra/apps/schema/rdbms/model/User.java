@@ -1,5 +1,6 @@
 package com.altra.apps.schema.rdbms.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,20 +18,22 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-    private String name, displayName;
+    private String displayName;
     @Lob
     private String bioData;
     private String avatarUrl;
     @Column(unique = true, nullable = false)
+
     private String email;
-    private String phoneNumber;
-    // TODO: one-to-one Or one-to-many ??
-    @OneToOne
-    @JoinColumn(name = "role_id",  foreignKey = @ForeignKey(name = "user_role"))
-    private Role role;
+    private boolean active;
+    private boolean verified;
+    private String school;
+
     @OneToOne
     @JoinColumn(name = "institution_id",foreignKey = @ForeignKey(name = "user_institution"))
     private Institution institution;
+
+
     @OneToOne
     @JoinColumn(name = "subscription_id", foreignKey = @ForeignKey(name = "user_subscription"))
     private Subscription Subscription;
