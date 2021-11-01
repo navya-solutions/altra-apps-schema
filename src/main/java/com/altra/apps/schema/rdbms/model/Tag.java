@@ -35,4 +35,9 @@ public class Tag {
     @JsonIgnore
     private User userInterests;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "institution_interests_id", foreignKey = @ForeignKey(name = "institution_interests"))
+    @JsonIgnore
+    private Institution institutionInterests;
+
 }
