@@ -21,7 +21,7 @@ public class Topic {
     @Column(nullable = false)
     private String title, topicUnitTitle;
     //private String label;
-    boolean hasChildren;
+    private boolean hasChildren,active;
 
     private String description;
 
@@ -35,6 +35,7 @@ public class Topic {
     private List<Topic> children = new LinkedList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(foreignKey = @ForeignKey(name = "parent_topic"))
     @JsonIgnore
     private Topic parent;
 

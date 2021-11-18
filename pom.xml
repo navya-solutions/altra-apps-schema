@@ -14,7 +14,7 @@
     <name>Altra Apps Schema</name>
     <description>Altra Apps Schem</description>
     <properties>
-        <java.version>16</java.version>
+        <java.version>17</java.version>
         <hibernate-types.version>2.12.1</hibernate-types.version>
         <graphql-kickstart.version>11.0.0</graphql-kickstart.version>
         <kotlin.version>1.3.70</kotlin.version>

@@ -14,9 +14,7 @@ import org.hibernate.envers.NotAudited;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Getter
 @Setter
@@ -35,7 +33,7 @@ public class Block implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private boolean publiclyAccessible;
-    private boolean archived;
+    private boolean archived,active;
     private String url;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -43,6 +41,11 @@ public class Block implements Serializable {
     @Type(type = "json")
     @Column(columnDefinition = "jsonb", nullable = false)
     private BlockType block;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(foreignKey = @ForeignKey(name = "block_create_by"))
+    @JsonIgnore
+    private User createdBy;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "topic_id", foreignKey = @ForeignKey(name = "block_topic"))
@@ -55,11 +58,6 @@ public class Block implements Serializable {
     @JsonIgnore
     //@NotAudited
     private Language language;
-
-
-    //@NotAudited
-    @OneToMany(mappedBy = "block", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private Set<BlockTag> tags = new HashSet<>();
 
     //@NotAudited
     @OneToMany(mappedBy = "block", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
@@ -74,11 +72,17 @@ public class Block implements Serializable {
     // Copy the source block id to newly created block
     private String refBlockId;
 
+    private boolean hasChildren;
+    private Long sequence;
+    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    //@JsonIgnore
+    private List<Block> children = new LinkedList<>();
 
-    public void addTag(BlockTag blockTag) {
-        this.tags.add(blockTag);
-        blockTag.setBlock(this);
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(foreignKey = @ForeignKey(name = "parent_block"))
+    @JsonIgnore
+    private Block parent;
+
 
     @Override
     public int hashCode() {
