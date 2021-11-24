@@ -42,6 +42,10 @@ public class Block implements Serializable {
     @Column(columnDefinition = "jsonb", nullable = false)
     private BlockType block;
 
+    @Type(type = "json")
+    @Column(columnDefinition = "jsonb")
+    private String note;
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(foreignKey = @ForeignKey(name = "block_create_by"))
     @JsonIgnore
