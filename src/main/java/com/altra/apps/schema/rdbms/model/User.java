@@ -13,11 +13,15 @@ import java.util.Set;
 @Setter
 @EqualsAndHashCode
 @Entity
-@Table(name = "USERS")
+@Table(name = "USERS",indexes = {
+        @Index(name = "user_displayName_index", columnList = "display_name")
+})
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
+
+    @Column(name="display_name")
     private String displayName;
     @Lob
     private String bioData;

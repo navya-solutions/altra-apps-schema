@@ -15,7 +15,11 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@Table(name = "BLOCK_CHANGE_REQUEST")
+@Table(name = "BLOCK_CHANGE_REQUEST",indexes = {
+        @Index(name = "block_cr_refObjectId_index", columnList = "refObjectId"),
+        @Index(name = "block_cr_blockId_index", columnList = "block_id"),
+        @Index(name = "block_cr_userId_index", columnList = "user_id"),
+})
 
 public class BlockChangeRequest implements Serializable {
     @Id

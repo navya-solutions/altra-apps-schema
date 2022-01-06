@@ -9,15 +9,18 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-@Getter
-@Setter
-@Entity
-@Table(name = "CURRICULUM")
+
 /**
  * A curriculum is a collection of topics with an owner
  *database
  */
-
+@Getter
+@Setter
+@Entity
+@Table(name = "CURRICULUM",indexes = {
+        @Index(name = "curriculum_refCurriculumId_index", columnList = "refCurriculumId"),
+        @Index(name = "curriculum_institutionId_index", columnList = "institution_id"),
+})
 public class Curriculum implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

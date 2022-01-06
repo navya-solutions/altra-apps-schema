@@ -13,7 +13,11 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@Table(name = "TOPIC")
+@Table(name = "TOPIC",indexes = {
+        @Index(name = "topic_refCurriculumId_index", columnList = "curriculum_id"),
+        @Index(name = "topic_TopicLabelId_index", columnList = "topicLabel_id"),
+        @Index(name = "topic_parentId_index", columnList = "parent_id"),
+})
 public class Topic {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

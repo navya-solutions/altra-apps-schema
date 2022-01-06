@@ -20,7 +20,10 @@ import java.util.*;
 @Setter
 //@EqualsAndHashCode
 @Entity
-@Table(name = "BLOCK")
+@Table(name = "BLOCK",indexes = {
+        @Index(name = "block_user_created_by_index", columnList = "created_by_id"),
+         @Index(name = "block_parent_id_index", columnList = "parent_id"),
+})
 @TypeDefs({
         @TypeDef(name = "json", typeClass = JsonType.class)
 })

@@ -11,8 +11,10 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "TOPIC_LABEL")
-
+@Table(name = "TOPIC_LABEL",indexes = {
+        @Index(name = "topicLabel_curriculumId_index", columnList = "curriculum_id"),
+        @Index(name = "topicLabel_orderId_index", columnList = "orderId"),
+})
 public class TopicLabel {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
